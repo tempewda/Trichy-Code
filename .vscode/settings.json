@@ -2,6 +2,7 @@
     "files.associations": {
         "*.ejs": "html",
         "QUIZ.C": "cpp",
-        "ASCENDAR.C": "cpp"
+        "ASCENDAR.C": "cpp",
+        "CALENDAR.C": "cpp"
     }
 }
