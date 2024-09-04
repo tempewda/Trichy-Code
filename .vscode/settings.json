@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "QUIZ.C": "cpp"
+        "*.ejs": "html",
+        "QUIZ.C": "cpp",
+        "ASCENDAR.C": "cpp"
     }
 }
