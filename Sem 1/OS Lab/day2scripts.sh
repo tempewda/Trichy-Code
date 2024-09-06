@@ -561,4 +561,11 @@ cache_alignment : 64
 address sizes   : 39 bits physical, 48 bits virtual
 power management:
 
-205124100@labca-026:/proc$
+205124100@labca-026:/$ cat /proc/cpuinfo |head -5
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 94
+model name      : Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+
+
