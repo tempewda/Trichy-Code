@@ -115,3 +115,43 @@ else
 echo "They are equal"
 fi
 
+205124100@labca-026:~$ nano cprocess.c
+205124100@labca-026:~$ nano forktest.c
+205124100@labca-026:~$ cc forktest.c
+forktest.c: In function ‘main’:
+forktest.c:6:9: warning: implicit declaration of function ‘fork’ [-Wimplicit-function-declaration]
+    6 |         fork();
+      |         ^~~~
+205124100@labca-026:~$ ./a.out
+Hello Children
+Hello Children
+Hello Children
+Hello Children
+205124100@labca-026:~$ nano forktest.c
+205124100@labca-026:~$ cc forktest.c
+forktest.c: In function ‘main’:
+forktest.c:6:9: warning: implicit declaration of function ‘fork’ [-Wimplicit-function-declaration]
+    6 |         fork();
+      |         ^~~~
+205124100@labca-026:~$ ./a.out
+Hello Children
+Hello Children
+Hello Children
+Hello Children
+Hello Children
+Hello Children
+Hello Children
+Hello Children
+205124100@labca-026:~$ cat forktest.c
+#include <stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+        fork();
+        fork();
+        fork();
+        printf("Hello Children\n");
+
+        return 0;
+}
