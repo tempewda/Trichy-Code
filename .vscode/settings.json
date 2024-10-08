@@ -3,6 +3,8 @@
         "*.ejs": "html",
         "QUIZ.C": "cpp",
         "ASCENDAR.C": "cpp",
-        "CALENDAR.C": "cpp"
+        "CALENDAR.C": "cpp",
+        "RVRSSTR.C": "cpp",
+        "CLBRTY.C": "cpp"
     }
 }

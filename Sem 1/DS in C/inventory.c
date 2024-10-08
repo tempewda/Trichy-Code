@@ -59,7 +59,7 @@ void create_inventory(struct Product_Node *head, struct Product_Node *tail)
 
     printf("Creating Inventory of 10 items...\n");
 
-    for (index = 0; index < 10; index++) {
+    for (index = 0; index < 1; index++) {
         // Input details of product
         printf("Item No. %d\n", index + 1);
         printf("Product id: ");
@@ -76,6 +76,7 @@ void create_inventory(struct Product_Node *head, struct Product_Node *tail)
 }
 
 
+// print all nodes in the inventory
 void display_inventory(struct Product_Node *head)
 {
     struct Product_Node *temp = head;
@@ -98,9 +99,10 @@ int main()
 
     // Create the inventory
     create_inventory(head, tail);
+    printf("%s", head->product_name);
 
     // Display the inventory
-    display_inventory(head);
+    // display_inventory(head);
 
     return 0;
 }
