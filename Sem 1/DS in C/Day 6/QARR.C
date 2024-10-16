@@ -1,16 +1,25 @@
 #include<stdio.h>
 #include<conio.h>
 
-# define SIZE 10
+# define SIZE 4
 
 
 void display(int queue[], int *front, int *rear)
 {
 	int i;
-	printf("\nItems in queue:\n");
+
+	//handle empty queue
+	if (*front == -1) {
+		printf("Queue empty!! Nothing to display...\n");
+		getch();
+		return;
+	}
+
+	printf("Items in queue: ");
 	for (i = *front; i <= *rear; ++i)
 		printf("%d ", queue[i]);
 	printf("\n");
+	getch();
 }
 
 
@@ -20,7 +29,8 @@ int enqueue(int queue[], int *front, int *rear, int item)
 {
 	//handle overflow condition
 	if (*rear >= (SIZE - 1)) {
-		printf("\nStack Overflow!!!\n");
+		printf("Queue full!! Can't enqueue...\n");
+		getch();
 		return 0;
 	}
 
@@ -47,7 +57,8 @@ int dequeue(int queue[], int *front, int *rear)
 
 	//handle underflow
 	if (*front == -1) {
-		printf("\nUnderflow!! Nothing to dequeue...\n");
+		printf("Queue empty!! Nothing to dequeue...\n");
+		getch();
 		return -1;
 	}
 
@@ -60,7 +71,11 @@ int dequeue(int queue[], int *front, int *rear)
 
 		//update rear position
 		--*rear;
-		printf("%d removed from queue", item);
+
+		if (*rear == -1)
+			*front = -1;
+
+		printf("%d removed from queue\n", item);
 		display(queue, front, rear);
 		return item;
 	}
@@ -71,17 +86,37 @@ int main()
 {
 	int queue[SIZE];
 	int front = -1, rear = -1;
+	int choice = 0, item = -1;
 
-	enqueue(queue, &front, &rear, 10);
-	enqueue(queue, &front, &rear, 9);
-	enqueue(queue, &front, &rear, 8);
-	enqueue(queue, &front, &rear, 7);
-	dequeue(queue, &front, &rear);
-	dequeue(queue, &front, &rear);
-	dequeue(queue, &front, &rear);
-	dequeue(queue, &front, &rear);
-	dequeue(queue, &front, &rear);
+	do {
+		clrscr();
+		printf("Queue using arrays:\n");
+		printf("1. Enqueue\n");
+		printf("2. Dequeue\n");
+		printf("3. Display\n");
+		printf("Enter your choice(others to exit): ");
+		scanf("%d", &choice);
 
+		switch(choice) {
+			case 1:
+				printf("Item: ");
+				scanf("%d", &item);
+				enqueue(queue, &front, &rear, item);
+				break;
+
+			case 2:
+				dequeue(queue, &front, &rear);
+				break;
+
+			case 3:
+				display(queue, &front, &rear);
+				break;
+
+			default:
+				getch();
+				return;
+		}
+	}while(1);
 	getch();
 	clrscr();
 	return 0;
