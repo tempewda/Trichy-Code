@@ -1,0 +1,2 @@
+Hello world! This is a sample text. This file contains words with some duplicates.
+This is a test file written for Python
