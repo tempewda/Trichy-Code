@@ -1,0 +1,23 @@
+CREATE TABLE Student (
+   StudentID int,
+   FirstName varchar(255),
+   LastName varchar(255),
+   DOJ date,
+   DOB date
+);
+
+INSERT INTO Student VALUES(123,"Tanmoy","Roy",'2024-08-14','2001-07-18');
+INSERT INTO Student VALUES(124,"Alok","Solanky",'2024-08-14','2002-07-02');
+INSERT INTO Student VALUES(125,"Saurabh","Dubey",'2024-08-14','2003-07-19');
+INSERT INTO Student VALUES(126,"Vaibhav","Kumar",'2024-08-14','2003-01-12');
+INSERT INTO Student VALUES(127,"Tulasi","Arya",'2024-08-14','2002-07-20');
+INSERT INTO Student VALUES(128,"Vivek","Singh",'2024-08-14','2003-07-21');
+
+DELETE FROM Student WHERE StudentID=123;
+INSERT INTO Student VALUES(123,"Tanmoy","Roy",'2024-08-14','2001-07-18');
+
+SELECT * FROM Student WHERE StudentID < 126;
+
+UPDATE Student
+SET DOB = '2002-06-02'
+WHERE StudentID = 124;
