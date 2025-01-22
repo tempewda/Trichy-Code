@@ -378,9 +378,11 @@ Sally
 Problem 3.29 - List out the employee names whose names starts with s  and ends with h.
 SELECT ENAME
 FROM YOUR_INITIALS_EMP
-WHERE ENAME LIKE 'S%H';
+WHERE UPPER(ENAME) LIKE 'S%H';
 
-no rows selected
+ENAME
+--------------------
+Sarah
 
 Problem 3.30 - List out the employee names whose salary is greater than  5000.
 SELECT ENAME
