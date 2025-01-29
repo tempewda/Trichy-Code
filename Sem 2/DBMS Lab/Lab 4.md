@@ -11,7 +11,8 @@ INSERT INTO TR_DEPT (DEPTNO, DNAME, LOC) VALUES (20, 'RESEARCH', 'DALLAS');
 INSERT INTO TR_DEPT (DEPTNO, DNAME, LOC) VALUES (30, 'SALES', 'CHICAGO');
 INSERT INTO TR_DEPT (DEPTNO, DNAME, LOC) VALUES (40, 'OPERATIONS', 'BOSTON');
 INSERT INTO TR_DEPT (DEPTNO, DNAME, LOC) VALUES (50, 'MAINTENANCE', 'HOUSTON');
-INSERT INTO TR_DEPT (DEPTNO, DNAME, LOC) VALUES (60, 'DEVELOPMENT', 'SAN FRANCISCO');
+INSERT INTO TR_DEPT (DEPTNO, DNAME, LOC) VALUES (60, 'DEVELOPMENT', 'MAINBLOCK');
+INSERT INTO TR_DEPT (DEPTNO, DNAME, LOC) VALUES (70, 'MANAGEMENT', 'SAN FRANCISCO');
 
 
 CREATE TABLE TR_EMP (
@@ -31,9 +32,9 @@ INSERT INTO TR_EMP VALUES (7521, 'WARD', 'SALESMAN', TO_DATE('22-FEB-81', 'DD-MO
 INSERT INTO TR_EMP VALUES (7566, 'JONES', 'MANAGER', TO_DATE('02-APR-81', 'DD-MON-YY'), 7839, 2975, NULL, 20);
 INSERT INTO TR_EMP VALUES (7654, 'MARTIN', 'SALESMAN', TO_DATE('28-SEP-81', 'DD-MON-YY'), 7698, 1250, 1400, 30);
 INSERT INTO TR_EMP VALUES (7698, 'BLAKE', 'MANAGER', TO_DATE('01-MAY-81', 'DD-MON-YY'), 7839, 2850, NULL, 30);
-INSERT INTO TR_EMP VALUES (7782, 'CLARK', 'MANAGER', TO_DATE('09-JUN-81', 'DD-MON-YY'), 7839, 2450, NULL, 10);
+INSERT INTO TR_EMP VALUES (7782, 'CLARK', 'DEVELOPER', TO_DATE('09-JUN-81', 'DD-MON-YY'), 7839, 2450, NULL, 10);
 INSERT INTO TR_EMP VALUES (7788, 'SCOTT', 'ANALYST', TO_DATE('19-APR-87', 'DD-MON-YY'), 7566, 3000, NULL, 20);
-INSERT INTO TR_EMP VALUES (7839, 'KING', 'PRESIDENT', TO_DATE('17-NOV-81', 'DD-MON-YY'), NULL, 5000, NULL, 10);
+INSERT INTO TR_EMP VALUES (7839, 'KING', 'PRESIDENT', TO_DATE('17-NOV-81', 'DD-MON-YY'), NULL, 9500, NULL, 10);
 INSERT INTO TR_EMP VALUES (7844, 'TURNER', 'SALESMAN', TO_DATE('08-SEP-81', 'DD-MON-YY'), 7698, 1500, 0, 30);
 INSERT INTO TR_EMP VALUES (7876, 'ADAMS', 'CLERK', TO_DATE('23-MAY-87', 'DD-MON-YY'), 7788, 1100, NULL, 20);
 INSERT INTO TR_EMP VALUES (7900, 'JAMES', 'CLERK', TO_DATE('03-DEC-81', 'DD-MON-YY'), 7698, 950, NULL, 30);
@@ -43,11 +44,16 @@ INSERT INTO TR_EMP VALUES (8001, 'DAVIS', 'ENGINEER', TO_DATE('10-JAN-90', 'DD-M
 INSERT INTO TR_EMP VALUES (8002, 'JOHNSON', 'TECHNICIAN', TO_DATE('12-FEB-92', 'DD-MON-YY'), 7839, 3800, NULL, 50);
 INSERT INTO TR_EMP VALUES (8003, 'ROBERTS', 'DEVELOPER', TO_DATE('15-MAR-93', 'DD-MON-YY'), 7566, 5000, NULL, 60);
 INSERT INTO TR_EMP VALUES (8004, 'WILSON', 'SOFTWARE ENGINEER', TO_DATE('20-APR-94', 'DD-MON-YY'), 7566, 5500, NULL, 60);
+INSERT INTO TR_EMP VALUES (8005, 'TAYLOR', 'MANAGER', TO_DATE('01-JAN-90', 'DD-MON-YY'), 7839, 3500, NULL, 10);
+INSERT INTO TR_EMP VALUES (8006, 'LEE', 'MANAGER', TO_DATE('15-MAY-91', 'DD-MON-YY'), 7839, 4000, NULL, 20);
+INSERT INTO TR_EMP VALUES (8007, 'ROBERT', 'MANAGER', TO_DATE('15-MAY-85', 'DD-MON-YY'), 7839, 4000, NULL, 70);
+INSERT INTO TR_EMP VALUES (8008, 'LISA', 'ASSISTANT MANAGER', TO_DATE('22-JUN-86', 'DD-MON-YY'), 8001, 3500, NULL, 70);
+
 ```
 
 
 ## Problem 4.1:
-Select all employees from ‘maintainance’ and ‘development’ dept.
+Select all employees from ‘maintenance’ and ‘development’ dept.
 
 ### Query
 ``` sql
@@ -55,12 +61,18 @@ SELECT *
 FROM TR_EMP
 WHERE DEPTNO IN
 (SELECT DEPTNO FROM TR_DEPT WHERE
-DNAME = 'MAINTAINANCE' OR
+DNAME = 'MAINTENANCE' OR
 DNAME = 'DEVELOPMENT');
 ```
 
 ### Output
 ``` bash
+     EMPNO ENAME                                              JOB                                                HIREDATE         MGR        SAL       COMM     DEPTNO
+---------- -------------------------------------------------- -------------------------------------------------- --------- ---------- ---------- ---------- ----------
+      8001 DAVIS                                              ENGINEER                                           10-JAN-90       7839       4200                    50
+      8002 JOHNSON                                            TECHNICIAN                                         12-FEB-92       7839       3800                    50
+      8003 ROBERTS                                            DEVELOPER                                          15-MAR-93       7566       5000                    60
+      8004 WILSON                                             SOFTWARE ENGINEER                                  20-APR-94       7566       5500                    60
 ```
 
 ## Problem 4.2: 
@@ -138,7 +150,10 @@ AND SAL >= (SELECT SAL FROM TR_EMP WHERE ENAME = 'FORD');
 
 ### Output
 ``` bash
-no rows selected
+     EMPNO ENAME                                              JOB                                                HIREDATE         MGR        SAL       COMM     DEPTNO
+---------- -------------------------------------------------- -------------------------------------------------- --------- ---------- ---------- ---------- ----------
+      8005 TAYLOR                                             MANAGER                                            01-JAN-90       7839       3500                    10
+      8006 LEE                                                MANAGER                                            15-MAY-91       7839       4000                    20
 ```
 
 
@@ -230,18 +245,22 @@ Write a query to list the employees having the same job as employees located in 
 SELECT * 
 FROM TR_EMP 
 WHERE JOB IN (
-    SELECT JOB 
+    SELECT DISTINCT JOB 
     FROM TR_EMP 
     WHERE DEPTNO IN (
         SELECT DEPTNO 
         FROM TR_DEPT 
-        WHERE LOC = 'Mainblock'
+        WHERE LOC = 'MAINBLOCK'
     )
 );
 ```
 
 ### Output
 ``` bash
+     EMPNO ENAME                                              JOB                                                HIREDATE         MGR        SAL       COMM     DEPTNO
+---------- -------------------------------------------------- -------------------------------------------------- --------- ---------- ---------- ---------- ----------
+      8003 ROBERTS                                            DEVELOPER                                          15-MAR-93       7566       5000                    60
+      8004 WILSON                                             SOFTWARE ENGINEER                                  20-APR-94       7566       5500                    60
 ```
 
 
@@ -262,6 +281,9 @@ WHERE DEPTNO = 10
 
 ### Output
 ``` bash
+     EMPNO ENAME                                              JOB                                                HIREDATE         MGR        SAL       COMM     DEPTNO
+---------- -------------------------------------------------- -------------------------------------------------- --------- ---------- ---------- ---------- ----------
+      7782 CLARK                                              DEVELOPER                                          09-JUN-81       7839       2450                    10
 ```
 
 
@@ -361,7 +383,9 @@ HAVING MAX(SAL) > 9000;
 
 ### Output
 ``` bash
-no rows selected
+    DEPTNO MAX_SALARY
+---------- ----------
+        10       9500
 ```
 
 
@@ -380,7 +404,10 @@ HAVING MIN(SAL) BETWEEN 1000 AND 5000;
 ``` bash
     DEPTNO MAX_SALARY
 ---------- ----------
-        10       5000
+        70       4000
+        50       4200
+        10       9500
+        60       5500
 ```
 
 
@@ -391,9 +418,13 @@ Display the department names that are accredited by the quality council.
 ### Query
 ``` SQL
 CREATE TABLE TR_ACCREDIT (
-    DEPTNO NUMBER(3) REFERENCES DEPT(DEPTNO), 
+    DEPTNO NUMBER(3) REFERENCES TR_DEPT(DEPTNO), 
     RANK VARCHAR2(20)
 );
+
+INSERT INTO TR_ACCREDIT VALUES (10, 'ISO 9001');
+INSERT INTO TR_ACCREDIT VALUES (20, 'CMMI Level 5');
+INSERT INTO TR_ACCREDIT VALUES (30, 'ISO 27001');
 
 -- Query
 SELECT D.DNAME 
@@ -404,6 +435,11 @@ ON D.DEPTNO = A.DEPTNO;
 
 ### Output
 ``` bash
+DNAME
+--------------------------------------------------
+ACCOUNTING
+RESEARCH
+SALES
 ```
 
 
@@ -419,6 +455,14 @@ WHERE E.DEPTNO NOT IN (SELECT DEPTNO FROM TR_ACCREDIT);
 
 ### Output
 ``` bash
+     EMPNO ENAME                                              JOB                                                HIREDATE         MGR        SAL       COMM     DEPTNO
+---------- -------------------------------------------------- -------------------------------------------------- --------- ---------- ---------- ---------- ----------
+      8002 JOHNSON                                            TECHNICIAN                                         12-FEB-92       7839       3800                    50
+      8001 DAVIS                                              ENGINEER                                           10-JAN-90       7839       4200                    50
+      8004 WILSON                                             SOFTWARE ENGINEER                                  20-APR-94       7566       5500                    60
+      8003 ROBERTS                                            DEVELOPER                                          15-MAR-93       7566       5000                    60
+      8008 LISA                                               ASSISTANT MANAGER                                  22-JUN-86       8001       3500                    70
+      8007 ROBERT                                             MANAGER                                            15-MAY-85       7839       4000                    70
 ```
 
 
