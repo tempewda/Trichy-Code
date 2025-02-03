@@ -1,3 +1,7 @@
+### Aim
+Java program to print the ARP Table
+
+### Code
 ``` java
 // Lab 4 - JAVA progra to print the ARP Table
 import java.io.BufferedReader;
@@ -29,4 +33,8 @@ public class ARPTablePrinter {
     }
   }
 }
+```
+
+### Output
+``` bash
 ```
