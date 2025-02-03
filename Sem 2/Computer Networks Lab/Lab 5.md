@@ -11,7 +11,10 @@ public class RandomAddressGenerator {
 
   public static void main (String[] args) {
     String randomMac = generateRandomMacAddress();
-    String RandomIP = generateRandomIpAddress();
+    String randomIp = generateRandomIpAddress();
+
+    System.out.println("Random MAC Address: " + randomMac);
+    System.out.println("Random IP Address: " + randomIp);
   }
 
   private static String generateRandomMacAddress() {
@@ -40,4 +43,9 @@ public class RandomAddressGenerator {
 
 ### Output
 ``` bash
+D:\JAVA>javac RandomAddressGenerator.java
+
+D:\JAVA>java RandomAddressGenerator
+Random MAC Address: e0:bd:b8:f1:6b:3c
+Random IP Address: 68.200.35.143
 ```
