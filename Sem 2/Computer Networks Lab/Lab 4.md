@@ -1,3 +1,4 @@
+``` java
 // Lab 4 - JAVA progra to print the ARP Table
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -28,3 +29,4 @@ public class ARPTablePrinter {
     }
   }
 }
+```
