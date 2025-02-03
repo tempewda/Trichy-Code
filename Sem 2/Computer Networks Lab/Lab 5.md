@@ -1,3 +1,9 @@
+### Aim
+Program to generate randomized MAC Address and IP Address
+
+### Code
+
+``` java
 // JAVA program to generate random MAC Address and IP Address
 import java.util.Random;
 
@@ -30,3 +36,8 @@ public class RandomAddressGenerator {
     return rand.nextInt(256) + "." + rand.nextInt(256) + "." + rand.nextInt(256) + "." + rand.nextInt(256);
   }
 }
+```
+
+### Output
+``` bash
+```
