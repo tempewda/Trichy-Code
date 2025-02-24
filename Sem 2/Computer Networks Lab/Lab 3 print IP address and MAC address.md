@@ -1,5 +1,5 @@
 ### Aim
-Java program to print ip address and MAC address
+Java program to print IP address and MAC address
 
 ### Code
 ``` java
