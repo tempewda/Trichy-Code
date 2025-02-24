@@ -155,4 +155,18 @@ IP addresss CIDR format is:192.168.1.1/24
 Class: C
 Network Address: 192.168.1.0    
 Broadcast Address: 192.168.1.255
+
+
+IP addresss CIDR format is:10.0.0.1/8
+
+Class: A
+Network Address: 10.0.0.0
+Broadcast Address: 10.255.255.255
+
+
+IP addresss CIDR format is:172.16.5.5/16
+
+Class: B
+Network Address: 172.16.0.0
+Broadcast Address: 172.16.255.255
 ```
