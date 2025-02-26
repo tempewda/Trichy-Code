@@ -4,12 +4,19 @@ DECLARE
   a NUMBER := 10;
   b NUMBER := 20;
 BEGIN
+	DBMS_OUTPUT.PUT_LINE('Before Swap: a = ' || a || ', b = ' || b);
   a := a + b; -- a becomes 30
   b := a - b; -- b becomes 10 (30 - 20)
   a := a - b; -- a becomes 20 (30 - 10)
   DBMS_OUTPUT.PUT_LINE('After Swap: a = ' || a || ', b = ' || b);
 END;
-/
+```
+
+### **Output**
+```bash
+Statement processed.
+Before Swap: a = 10, b = 20
+After Swap: a = 20, b = 10
 ```
 
 ---
@@ -21,12 +28,19 @@ DECLARE
   b NUMBER := 20;
   temp NUMBER;
 BEGIN
+	DBMS_OUTPUT.PUT_LINE('Before Swap: a = ' || a || ', b = ' || b);
   temp := a;
   a := b;
   b := temp;
   DBMS_OUTPUT.PUT_LINE('After Swap: a = ' || a || ', b = ' || b);
 END;
-/
+```
+
+### **Output**
+```bash
+Statement processed.
+Before Swap: a = 10, b = 20
+After Swap: a = 20, b = 10
 ```
 
 ---
@@ -38,6 +52,7 @@ DECLARE
   num2 NUMBER := 25;
   result NUMBER;
 BEGIN
+	DBMS_OUTPUT.PUT_LINE('num1 = ' || num1 || ', num2 = ' || num2);
   IF num1 > num2 THEN
     result := num1;
   ELSE
@@ -45,9 +60,14 @@ BEGIN
   END IF;
   DBMS_OUTPUT.PUT_LINE('Largest Number: ' || result);
 END;
-/
 ```
 
+### **Output**
+```bash
+Statement processed.
+num1 = 15, num2 = 25
+Largest Number: 25
+```
 ---
 
 ### **Program 6.4: Total, Average, and Grade of 6 Subjects**
@@ -77,9 +97,13 @@ BEGIN
   
   DBMS_OUTPUT.PUT_LINE('Total: ' || total || ', Average: ' || average || ', Grade: ' || grade);
 END;
-/
 ```
 
+### **Output**
+```bash
+Statement processed.
+Total: 528, Average: 88, Grade: B
+```
 ---
 
 ### **Program 6.5: Sum of Digits in a Number**
@@ -89,6 +113,7 @@ DECLARE
   sum_digits NUMBER := 0;
   temp NUMBER;
 BEGIN
+	DBMS_OUTPUT.PUT_LINE('Number: ' || num);
   temp := num;
   WHILE temp > 0 LOOP
     sum_digits := sum_digits + MOD(temp, 10); -- Add last digit
@@ -96,9 +121,14 @@ BEGIN
   END LOOP;
   DBMS_OUTPUT.PUT_LINE('Sum of Digits: ' || sum_digits);
 END;
-/
 ```
 
+### **Output**
+```bash
+Statement processed.
+Number: 12345
+Sum of Digits: 15
+```
 ---
 
 ### **Program 6.6: Reverse a Number**
@@ -108,6 +138,7 @@ DECLARE
   reversed_num NUMBER := 0;
   temp NUMBER;
 BEGIN
+	DBMS_OUTPUT.PUT_LINE('Original Number: ' || num);
   temp := num;
   WHILE temp > 0 LOOP
     reversed_num := reversed_num * 10 + MOD(temp, 10);
@@ -115,7 +146,13 @@ BEGIN
   END LOOP;
   DBMS_OUTPUT.PUT_LINE('Reversed Number: ' || reversed_num);
 END;
-/
+```
+
+### **Output**
+```bash
+Statement processed.
+Original Number: 1234
+Reversed Number: 4321
 ```
 
 ---
@@ -143,7 +180,12 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(num || ' is Not Prime');
   END IF;
 END;
-/
+```
+
+### **Output**
+```bash
+Statement processed.
+17 is Prime
 ```
 
 ---
@@ -159,7 +201,12 @@ BEGIN
   END LOOP;
   DBMS_OUTPUT.PUT_LINE('Factorial of ' || num || ': ' || factorial);
 END;
-/
+```
+
+### **Output**
+```bash
+Statement processed.
+Factorial of 5: 120
 ```
 
 ---
@@ -183,9 +230,22 @@ BEGIN
   END LOOP;
   COMMIT;
 END;
-/
 ```
 
+**Step 3: Display Table**
+```sql
+SELECT *
+FROM areas;
+```
+
+### **Output**
+| RADIUS | AREA |
+| ---  | --- |
+| 3 | 28.26 |
+| 4 | 50.24 |
+| 5 | 78.5 |
+| 6 | 113.04 |
+| 7 | 153.86 |
 ---
 
 ### **Program 6.10: Deduct Rs. 100 if Balance < Minimum**
@@ -209,5 +269,4 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('No Deduction.');
   END IF;
 END;
-/
 ```
