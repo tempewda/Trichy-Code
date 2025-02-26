@@ -249,24 +249,55 @@ FROM areas;
 ---
 
 ### **Program 6.10: Deduct Rs. 100 if Balance < Minimum**
-**Assumption**: `acct` table has columns `account_no`, `balance`, and `min_balance`.
 ```sql
-DECLARE
-  v_account_no acct.account_no%TYPE := &account_no; -- User input
-  v_balance acct.balance%TYPE;
-  v_min_balance acct.min_balance%TYPE;
-BEGIN
-  SELECT balance, min_balance INTO v_balance, v_min_balance
-  FROM acct
-  WHERE account_no = v_account_no;
+CREATE TABLE TR_ACCT(
+	account_no NUMBER PRIMARY KEY,
+	balance NUMBER NOT NULL
+);
 
-  IF v_balance < v_min_balance THEN
-    UPDATE acct
-    SET balance = balance - 100
-    WHERE account_no = v_account_no;
-    DBMS_OUTPUT.PUT_LINE('Rs. 100 Deducted.');
-  ELSE
-    DBMS_OUTPUT.PUT_LINE('No Deduction.');
-  END IF;
+INSERT INTO TR_ACCT(account_no, balance) VALUES (101, 400);
+INSERT INTO TR_ACCT(account_no, balance) VALUES (102, 550);
+
+COMMIT;
+
+SELECT * FROM TR_ACCT;
+
+DECLARE
+	acct_num NUMBER;
+	min_balance NUMBER := 500;
+	current_balance NUMBER;
+BEGIN
+	acct_num := &acct_num;
+	SELECT balance INTO current_balance FROM TR_ACCT WHERE account_no = acct_num;
+	IF current_balance < min_balance THEN
+		UPDATE TR_ACCT
+		SET balance = balance - 100
+		WHERE account_no = acct_num;
+		
+		DBMS_OUTPUT.PUT_LINE('Rs 100 deducted from account: ' || acct_num);
+	ELSE
+		DBMS_OUTPUT.PUT_LINE('Balance is sufficient, no deduction');
+	END IF;
+	COMMIT;
 END;
+/
+```
+
+### **Output**
+```bash
+
+ACCOUNT_NO    BALANCE
+---------- ----------
+       101        400
+       102        550
+
+Enter value for acct_num: 102
+old   6:        acct_num := &acct_num;
+new   6:        acct_num := 102;
+Balance is sufficient, no deduction
+
+Enter value for acct_num: 101
+old   6:        acct_num := &acct_num;
+new   6:        acct_num := 101;
+Rs 100 deducted from account: 101
 ```
