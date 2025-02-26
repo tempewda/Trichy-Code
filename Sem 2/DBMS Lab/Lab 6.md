@@ -281,6 +281,8 @@ BEGIN
 	COMMIT;
 END;
 /
+
+SELECT * FROM TR_ACCT;
 ```
 
 ### **Output**
@@ -300,4 +302,9 @@ Enter value for acct_num: 101
 old   6:        acct_num := &acct_num;
 new   6:        acct_num := 101;
 Rs 100 deducted from account: 101
+
+ACCOUNT_NO    BALANCE
+---------- ----------
+       101        300
+       102        550
 ```
