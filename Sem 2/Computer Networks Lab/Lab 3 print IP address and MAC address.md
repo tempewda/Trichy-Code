@@ -13,6 +13,10 @@ public class IPAndMACAddress {
   public static void main(String[] args) {
     try {
       // Get the local host
+			// getLocalHost() is a static function of InetAddress class
+      // it returns an InetAddress object representing the local machine's ip address
+      // this object contains 3 info, the host name, host address/ip address and canonical hostname
+      // we print the hostaddress of the object
       InetAddress ip = InetAddress.getLocalHost();
       System.out.println("IP Address: " + ip.getHostAddress());
 
