@@ -19,7 +19,7 @@ INSERT INTO emp100 (empno, ename, job, sal, deptno) VALUES (5, 'David', 'Designe
 SELECT * FROM emp100;
 ```
 
-### **Program 1**
+### **Program 7.1**
 Write a procedure to add an amount of Rs.1000 for the employees whose salaries is greater than 5000  and who belongs to the deptno passed as an argument .
 
 ```sql
@@ -40,6 +40,7 @@ END;
 
 SELECT * FROM emp100;
 ```
+
 ### **Output**
 ```bash
      EMPNO ENAME                                              JOB                                                       SAL     DEPTNO
@@ -72,12 +73,13 @@ END;
 SELECT * FROM emp100;
 ```
 
+### **Output**
 ```bash
      EMPNO ENAME                                              JOB                                                       SAL     DEPTNO
 ---------- -------------------------------------------------- -------------------------------------------------- ---------- ----------
          1 John                                               Manager                                                  6000         10
-         2 Alice                                              Developer                                                4500         20
-         3 Bob                                                Analyst                                                  8250         20
+         2 Alice                                              Developer                                                4950         20
+         3 Bob                                                Analyst                                                  7500         20
          4 Charlie                                            Tester                                                   4000         30
          5 David                                              Designer                                                 7000         30
 ```
@@ -104,10 +106,11 @@ END;
 SELECT get_salary_by_dept(20) FROM dual;
 ```
 
+### **Output**
 ```bash
-Salary of the first employee working in dept no 20: 4500
-
-PL/SQL procedure successfully completed.
+GET_SALARY_BY_DEPT(20)
+----------------------
+                  4950
 ```
 
 ### **Program 7.4: Write a function to find the nature of job of the employee whose deptno is 20(to be passed as an argument)**
@@ -133,7 +136,14 @@ END;
 SELECT get_job_by_dept(10) FROM dual;
 ```
 
-### **Program 5**
+### **Output**
+```bash
+GET_JOB_BY_DEPT(10)
+-------------------
+           Manager
+``` 
+
+### **Program 7.5**
 Write a PL/SQL block to obtain the department name of the employee who works for deptno 30.
 
 ### **Code**
@@ -163,4 +173,11 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Department not found');
 END;
 /
+```
+
+### **Output**
+```bash
+Department name for deptno 30 is: Sales
+
+PL/SQL procedure successfully completed.
 ```
