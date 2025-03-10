@@ -97,6 +97,71 @@ Enter Shift Key: 3
 Decrypted Message:aaaaa
 ```
 
+### **Transposition**
+```java
+import java.util.Scanner;
+
+public class Transpose {
+
+    public static String encrypt(String message, int rowSize) {
+        String encryptedMsg = "";
+        // fill empty spaces
+        int emptySpace = rowSize - (message.length() % rowSize);
+        while (emptySpace > 0) {
+            message += '_';
+            --emptySpace;
+        }
+        for (int col = 0; col < rowSize; ++col) {
+            int index = col;
+            while (index < message.length()) {
+                encryptedMsg += message.charAt(index);
+                index += rowSize;
+            }
+        }
+
+        return encryptedMsg;
+    }
+
+    public static String decrypt(String message, int rowSize) {
+        String decryptedMsg = "";
+        int totalRows = message.length() / rowSize;
+        for (int row = 0; row < totalRows; ++row) {
+            int index = row;
+            while (index < message.length()) {
+                decryptedMsg += message.charAt(index);
+                index += totalRows;
+            }
+        }
+
+        return decryptedMsg;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int rowSize = 0;
+        String message = "";
+
+        System.out.println("Message for Encryption: ");
+        message += sc.nextLine();
+        message = message.replace(' ', '_');
+        System.out.println("Row Size: ");
+        rowSize = sc.nextInt();
+        System.out.println("Encrypted message: " + encrypt(message, rowSize));
+
+        sc.nextLine();
+        message = "";
+        System.out.println("Message for Decryption: ");
+        message += sc.nextLine();
+        message = message.replace(' ', '_');
+        System.out.println("Row Size: ");
+        rowSize = sc.nextInt();
+        System.out.println("Decrypted message: " + decrypt(message, rowSize));
+
+        sc.close();
+    }
+}
+```
 
 
 
