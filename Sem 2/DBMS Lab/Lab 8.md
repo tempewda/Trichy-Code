@@ -293,24 +293,23 @@ Copy
 SELECT * FROM tremp;
 Expected Output:
 
-Copy
+```
 EMPNO  ENAME        JOB         SAL     DEPTNO
 -----  -----------  ----------  ------  ------
 202    Bob Johnson  Clerk       25000   20
 401    Charlie Davis Engineer   45000   40
 402    Diana Evans  Technician  35000   40
-Check the trlog table:
+```
 
-sql
-Copy
+```sql
 SELECT * FROM trlog;
-Expected Output:
+```
 
-Copy
+```
 LOG_ID  MESSAGE                                      LOG_TIME
 ------  ------------------------------------------  -------------------
 1       Record deleted from EMP table: EMPNO = 201   2023-10-25 12:34:56
-
+```
 ---
 
 ### 7. **Trigger to Log Changes to EMP Table**
