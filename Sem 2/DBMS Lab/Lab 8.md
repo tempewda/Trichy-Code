@@ -104,6 +104,43 @@ END;
 /
 ```
 
+#### 1. **Test Case 1: Insert a Valid Record**
+This should work without any errors.
+```sql
+BEGIN
+    INSERT INTO trdept (deptno, dname, loc) VALUES (10, 'ACCOUNTING', 'NEW YORK');
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Insert successful: DEPTNO = 10');
+END;
+/
+```
+
+#### 2. **Test Case 2: Insert a Record with NULL DEPTNO**
+This should raise an error (`DEPTNO cannot be NULL`).
+```sql
+BEGIN
+    INSERT INTO trdept (deptno, dname, loc) VALUES (NULL, 'SALES', 'CHICAGO');
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+/
+```
+
+#### 3. **Test Case 3: Insert a Duplicate DEPTNO**
+This should raise an error (`Duplicate DEPTNO not allowed`).
+```sql
+BEGIN
+    INSERT INTO trdept (deptno, dname, loc) VALUES (10, 'RESEARCH', 'DALLAS');
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+/
+```
+
 ---
 
 ### 5. **Trigger to Delete Records from EMP Table When DEPTNO is Deleted from DEPT Table**
