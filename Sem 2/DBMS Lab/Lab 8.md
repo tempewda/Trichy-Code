@@ -1,31 +1,31 @@
 ### 1. **Create Tables**
 ```sql
 -- Create DEPT table
-CREATE TABLE dept (
+CREATE TABLE trdept (
     deptno NUMBER PRIMARY KEY,
     dname VARCHAR2(50),
     loc VARCHAR2(50)
 );
 
 -- Create EMP table
-CREATE TABLE emp (
+CREATE TABLE tremp (
     empno NUMBER PRIMARY KEY,
     ename VARCHAR2(50),
     job VARCHAR2(50),
     sal NUMBER,
     deptno NUMBER,
-    CONSTRAINT fk_deptno FOREIGN KEY (deptno) REFERENCES dept(deptno)
+    CONSTRAINT trfk_deptno FOREIGN KEY (deptno) REFERENCES trdept(deptno)
 );
 
 -- Create LOG table
-CREATE TABLE log (
+CREATE TABLE trlog (
     log_id NUMBER PRIMARY KEY,
     message VARCHAR2(200),
     log_time TIMESTAMP
 );
 
 -- Create SALARY_LOG table
-CREATE TABLE salary_log (
+CREATE TABLE trsalary_log (
     log_id NUMBER PRIMARY KEY,
     empno NUMBER,
     old_salary NUMBER,
@@ -39,13 +39,13 @@ CREATE TABLE salary_log (
 ### 2. **Create Sequences for Auto-Incrementing Primary Keys**
 ```sql
 -- Sequence for LOG table
-CREATE SEQUENCE log_seq
+CREATE SEQUENCE trlog_seq
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
 
 -- Sequence for SALARY_LOG table
-CREATE SEQUENCE salary_log_seq
+CREATE SEQUENCE trsalary_log_seq
 START WITH 1
 INCREMENT BY 1
 NOCACHE;
@@ -57,8 +57,8 @@ NOCACHE;
 
 #### Trigger for LOG Table
 ```sql
-CREATE OR REPLACE TRIGGER trg_log_id
-BEFORE INSERT ON log
+CREATE OR REPLACE TRIGGER trtrg_log_id
+BEFORE INSERT ON trlog
 FOR EACH ROW
 BEGIN
     IF :NEW.log_id IS NULL THEN
@@ -70,8 +70,8 @@ END;
 
 #### Trigger for SALARY_LOG Table
 ```sql
-CREATE OR REPLACE TRIGGER trg_salary_log_id
-BEFORE INSERT ON salary_log
+CREATE OR REPLACE TRIGGER trtrg_salary_log_id
+BEFORE INSERT ON trsalary_log
 FOR EACH ROW
 BEGIN
     IF :NEW.log_id IS NULL THEN
@@ -85,8 +85,8 @@ END;
 
 ### 4. **Trigger to Prevent Duplicate or NULL Values in DEPTNO Column**
 ```sql
-CREATE OR REPLACE TRIGGER trg_deptno_check
-BEFORE INSERT OR UPDATE ON dept
+CREATE OR REPLACE TRIGGER trtrg_deptno_check
+BEFORE INSERT OR UPDATE ON trdept
 FOR EACH ROW
 BEGIN
     -- Check for NULL values
@@ -108,8 +108,8 @@ END;
 
 ### 5. **Trigger to Delete Records from EMP Table When DEPTNO is Deleted from DEPT Table**
 ```sql
-CREATE OR REPLACE TRIGGER trg_delete_deptno
-AFTER DELETE ON dept
+CREATE OR REPLACE TRIGGER trtrg_delete_deptno
+AFTER DELETE ON trdept
 FOR EACH ROW
 BEGIN
     DELETE FROM emp WHERE deptno = :OLD.deptno;
@@ -121,11 +121,11 @@ END;
 
 ### 6. **Trigger to Log Deleted Records from EMP Table**
 ```sql
-CREATE OR REPLACE TRIGGER trg_log_deleted_emp
-AFTER DELETE ON emp
+CREATE OR REPLACE TRIGGER trtrg_log_deleted_emp
+AFTER DELETE ON tremp
 FOR EACH ROW
 BEGIN
-    INSERT INTO log (log_id, message, log_time)
+    INSERT INTO trlog (log_id, message, log_time)
     VALUES (log_seq.NEXTVAL, 'Record deleted from EMP table: EMPNO = ' || :OLD.empno, SYSTIMESTAMP);
 END;
 /
@@ -135,10 +135,10 @@ END;
 
 ### 7. **Trigger to Log Changes to EMP Table**
 ```sql
-CREATE OR REPLACE TRIGGER trg_log_emp_changes
-BEFORE INSERT OR UPDATE OR DELETE ON emp
+CREATE OR REPLACE TRIGGER trtrg_log_emp_changes
+BEFORE INSERT OR UPDATE OR DELETE ON tremp
 BEGIN
-    INSERT INTO log (log_id, message, log_time)
+    INSERT INTO trlog (log_id, message, log_time)
     VALUES (log_seq.NEXTVAL, 'Employees table being changed', SYSTIMESTAMP);
 END;
 /
@@ -148,8 +148,8 @@ END;
 
 ### 8. **Trigger to Log Salary Updates in EMP Table**
 ```sql
-CREATE OR REPLACE TRIGGER trg_log_salary_changes
-BEFORE UPDATE ON emp
+CREATE OR REPLACE TRIGGER trtrg_log_salary_changes
+BEFORE UPDATE ON tremp
 FOR EACH ROW
 WHEN (OLD.sal <> NEW.sal)
 BEGIN
@@ -163,12 +163,12 @@ END;
 
 ### 9. **Trigger to Log Salary Revisions for Employees with Salary > 20000**
 ```sql
-CREATE OR REPLACE TRIGGER trg_log_high_salary_changes
-BEFORE UPDATE ON emp
+CREATE OR REPLACE TRIGGER trtrg_log_high_salary_changes
+BEFORE UPDATE ON tremp
 FOR EACH ROW
 WHEN (OLD.sal > 20000 AND OLD.sal <> NEW.sal)
 BEGIN
-    INSERT INTO log (log_id, message, log_time)
+    INSERT INTO trlog (log_id, message, log_time)
     VALUES (log_seq.NEXTVAL, 'Salary revised for EMPNO = ' || :OLD.empno || ' from ' || :OLD.sal || ' to ' || :NEW.sal, SYSTIMESTAMP);
 END;
 /
