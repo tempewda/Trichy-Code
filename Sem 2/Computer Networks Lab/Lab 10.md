@@ -76,3 +76,41 @@ d is: 107
 Cipher text is: 43.0 
 Decrypted text is: 32
 ```
+
+### **DES**
+```java
+import javax.crypto.Cipher; 
+import javax.crypto.KeyGenerator; 
+import javax.crypto.SecretKey; 
+import java.util.Base64;
+
+public class DES { 
+    public static void main(String[] args) throws Exception { 
+        // Step 1: Generate a DES key 
+        KeyGenerator keyGenerator = KeyGenerator.getInstance("DES"); 
+        SecretKey secretkey = keyGenerator.generateKey(); 
+
+        // Step 2: Create a DES Cipher instance 
+        Cipher cipher = Cipher.getInstance("DES"); 
+        String plainText = "HelloWorld"; // Message to be encrypted 
+
+        // Step 3: Encrypt the plaintext 
+        cipher.init(Cipher.ENCRYPT_MODE, secretkey); 
+        byte[] encryptedBytes = cipher.doFinal (plainText.getBytes()); 
+        String encryptedText = Base64.getEncoder().encodeToString(encryptedBytes); 
+        System.out.println("Encrypted Text: " + encryptedText); 
+
+        // Step 4: Decrypt the ciphertext 
+        cipher.init(Cipher.DECRYPT_MODE, secretkey); 
+        byte[] decryptedBytes = cipher.doFinal (Base64.getDecoder().decode(encryptedText)); 
+        String decryptedText = new String(decryptedBytes); 
+        System.out.println("Decrypted Text: " + decryptedText); 
+    } 
+}
+```
+
+### **Output**
+```
+Encrypted Text: a4vBLS5iiPILwWJddUCijw==
+Decrypted Text: HelloWorld
+```
