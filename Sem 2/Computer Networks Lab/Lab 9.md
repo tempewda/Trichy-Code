@@ -98,70 +98,76 @@ Decrypted Message:aaaaa
 ```
 
 ### **Transposition**
+### **Encryption**
 ```java
-import java.util.Scanner;
-
-public class Transpose {
-
-    public static String encrypt(String message, int rowSize) {
-        String encryptedMsg = "";
-        // fill empty spaces
-        int emptySpace = rowSize - (message.length() % rowSize);
-        while (emptySpace > 0) {
-            message += '_';
-            --emptySpace;
+package cnlab;
+import java.util.*;
+public class tencrpt {
+    public static String encrypt(String message,int key){
+        StringBuilder column[]=new StringBuilder[key];
+        for(int i=0;i<key;i++){
+            column[i]=new StringBuilder();
         }
-        for (int col = 0; col < rowSize; ++col) {
-            int index = col;
-            while (index < message.length()) {
-                encryptedMsg += message.charAt(index);
-                index += rowSize;
-            }
+        for(int i=0;i<message.length();i++){
+            int col=i%key;
+            column[col].append(message.charAt(i));
         }
-
-        return encryptedMsg;
-    }
-
-    public static String decrypt(String message, int rowSize) {
-        String decryptedMsg = "";
-        int totalRows = message.length() / rowSize;
-        for (int row = 0; row < totalRows; ++row) {
-            int index = row;
-            while (index < message.length()) {
-                decryptedMsg += message.charAt(index);
-                index += totalRows;
-            }
+        StringBuilder cipher=new StringBuilder();
+        for(StringBuilder col:column){
+            cipher.append(col);
         }
-
-        return decryptedMsg;
+        return cipher.toString();
     }
-
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int rowSize = 0;
-        String message = "";
-
-        System.out.println("Message for Encryption: ");
-        message += sc.nextLine();
-        message = message.replace(' ', '_');
-        System.out.println("Row Size: ");
-        rowSize = sc.nextInt();
-        System.out.println("Encrypted message: " + encrypt(message, rowSize));
-
-        sc.nextLine();
-        message = "";
-        System.out.println("Message for Decryption: ");
-        message += sc.nextLine();
-        message = message.replace(' ', '_');
-        System.out.println("Row Size: ");
-        rowSize = sc.nextInt();
-        System.out.println("Decrypted message: " + decrypt(message, rowSize));
-
-        sc.close();
-    }
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the message: ");
+        String text=sc.nextLine();
+        System.out.println("Enter key: ");
+        int key=sc.nextInt();
+        System.out.println("Encrypted text is : "+ encrypt(text,key));
+    }
 }
 ```
+
+### **Decryption**
+```java
+package cnlab;
+import java.util.Scanner;
+
+public class tdecrypt {
+    public static String decrypt(String message, int key) {
+        int numRow = (int) Math.ceil((double) message.length() / key);
+        int numFullCol = message.length() % key;
+        char[][] grid = new char[numRow][key];
+        int index = 0;
+
+        for (int i = 0; i < key; i++) {
+            int currColLen = (i < numFullCol || numFullCol == 0) ? numRow : numRow - 1;
+            for (int j = 0; j < currColLen && index < message.length(); j++) {
+                grid[j][i] = message.charAt(index++);  // ✅ fix is here: grid[row][col]
+            }
+        }
+
+        StringBuilder plainText = new StringBuilder();
+        for (int i = 0; i < numRow; i++) {
+            for (int j = 0; j < key; j++) {
+                if (grid[i][j] != 0) {
+                    plainText.append(grid[i][j]);
+                }
+            }
+        }
+        return plainText.toString();
+    }
+
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the cipher text: ");
+        String cipher = sc.nextLine();
+        System.out.println("Enter the key: ");
+        int key = sc.nextInt();
+        System.out.println("Decrypted message is: " + decrypt(cipher, key));
+    }
+}
 
 
 
