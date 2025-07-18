@@ -1,4 +1,19 @@
-# Q1
+# Problem-1:
+Implement perceptron training algorithm (PTA) for the following:
+
+- AND
+- OR
+- NOT
+- NAND
+- XOR
+- 5-input palindrome
+- 5-input majority
+- 5-input parity problems
+
+Strat with random weights and observe convergence. Repeat iterations when convergence not
+happen. Display the number of iterations it takes for convergence.
+
+
 ```cpp
 #include <iostream>
 #include <vector>
