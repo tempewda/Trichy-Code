@@ -69,6 +69,12 @@ std::vector<std::vector<int>> adj_list = {{1, 2}, {0, 2, 3}, {0, 1, 4}, {1, 4}, 
 }
 ```
 
+## Output
+```bash
+BFS: 0 1 2 3 4 
+DFS: 0 1 3 4 2 
+```
+
 # Problem 2
 Use A* algorithm to solve 8-puzzle problem
 
@@ -304,4 +310,43 @@ void solve_puzzle(const std::vector<int>& initial_board, const std::vector<int>&
 	
 	std::cout << "No solution found." << std::endl;
 }
+```
+
+## Output
+```bash
+Initial Board:
+
+1 2 3 
+  4 6 
+7 5 8 
+
+
+Goal Board:
+
+1 2 3 
+4 5 6 
+7 8   
+
+
+Solving...
+Solution found in 3 moves:
+
+1 2 3 
+  4 6 
+7 5 8 
+
+
+1 2 3 
+4   6 
+7 5 8 
+
+
+1 2 3 
+4 5 6 
+7   8 
+
+
+1 2 3 
+4 5 6 
+7 8   
 ```
