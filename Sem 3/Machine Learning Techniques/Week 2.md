@@ -59,11 +59,7 @@ void dfs(const std::vector<std::vector<int>>& adj_list, const int nodes_count, c
 
 
 int main() {
-	std::vector<std::vector<int>> adj_list = {  {1, 2}, 
-																							{0, 2, 3}, 
-																							{0, 1, 4},
-																							{1, 4}, 
-																							{2, 3} };
+std::vector<std::vector<int>> adj_list = {{1, 2}, {0, 2, 3}, {0, 1, 4}, {1, 4}, {2, 3}};
 	int nodes_count = adj_list.size();
 
 	bfs(adj_list, nodes_count, 0);
