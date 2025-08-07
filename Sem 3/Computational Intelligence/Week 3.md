@@ -660,3 +660,77 @@ Analyze the role of activations functions Sigmoid, ReLu and Softmax.
 
 # Problem-5
 Frame a problem statement related to your project title and Train an MLP a small dataset (Synthetic dataset or standard dataset)
+
+### Problem Statement
+Create a Multi-Layer Perceptron model to determine if a student will pass an exam. The decision is based on two features: hours studied and attendance percentage (normalized between 0 and 1). The output should be a single value: 1 for Pass, 0 for Fail.
+
+| hours_studied | attendance | will_pass |
+|---------------|------------|-----------|
+| 0.9           | 0.8        | 1         |
+| 0.8           | 0.9        | 1         |
+| 1.0           | 1.0        | 1         |
+| 0.2           | 0.3        | 0         |
+| 0.1           | 0.4        | 0         |
+| 0.4           | 0.1        | 0         |
+| 0.9           | 0.3        | 1         |
+| 0.3           | 0.8        | 0         |
+
+## Code
+```cpp
+#include "MLP.h"
+
+int main() {
+		vector<vector<double>> inputs = {
+				{0.9, 0.8}, {0.8, 0.9}, {1.0, 1.0}, {0.2, 0.3},
+				{0.1, 0.4}, {0.4, 0.1}, {0.9, 0.3}, {0.3, 0.8}
+		};
+		vector<vector<double>> targets = {
+				{1}, {1}, {1}, {0}, {0}, {0}, {1}, {0}
+		};
+
+		vector<vector<double>> test_data = {
+				{0.95, 0.85}, // Expected: 1 (Pass)
+				{0.15, 0.25}  // Expected: 0 (Fail)
+		};
+
+		MLP mlp(2, 1, 4, 1, 0.5, inputs, targets);
+
+		cout << "--- Training Started ---" << endl;
+		mlp.train(20000);
+		cout << "--- Training Finished ---" << endl;
+
+		mlp.test(test_data);
+
+		return 0;
+}
+```
+
+## Output
+```bash
+--- Training Started ---
+Epoch 0, Error: 2.1758
+Epoch 1000, Error: 0.00480908
+Epoch 2000, Error: 0.00204511
+Epoch 3000, Error: 0.00126429
+Epoch 4000, Error: 0.000904602
+Epoch 5000, Error: 0.000699882
+Epoch 6000, Error: 0.000568514
+Epoch 7000, Error: 0.000477411
+Epoch 8000, Error: 0.000410695
+Epoch 9000, Error: 0.000359827
+Epoch 10000, Error: 0.000319818
+Epoch 11000, Error: 0.000287561
+Epoch 12000, Error: 0.000261028
+Epoch 13000, Error: 0.000238835
+Epoch 14000, Error: 0.00022001
+Epoch 15000, Error: 0.000203849
+Epoch 16000, Error: 0.000189829
+Epoch 17000, Error: 0.000177557
+Epoch 18000, Error: 0.000166729
+Epoch 19000, Error: 0.000157106
+--- Training Finished ---
+
+Testing on given inputs:
+(0.95, 0.85)    =   (1)
+(0.15, 0.25)    =   (0)
+```
