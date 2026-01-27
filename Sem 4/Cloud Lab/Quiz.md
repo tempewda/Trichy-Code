@@ -2290,3 +2290,1754 @@ Good luck with your quiz! 🍀
 ---
 
 Good luck with your Lab 2 quiz! 🔐🍀
+
+# Azure Lab 3 MCQs: Storage Services, Blob Storage & SQL Queries on CSV
+
+## 📌 SECTION 1: Azure Storage Account Basics
+
+### Q1. Azure Storage Account is:
+- A) A virtual machine
+- B) A container for Azure Storage services ✅
+- C) A database
+- D) A network service
+
+### Q2. Which services are included in Azure Storage Account?
+- A) Only Blob Storage
+- B) Blob, File, Queue, and Table Storage ✅
+- C) Only File Storage
+- D) Only SQL Database
+
+### Q3. Storage account name must be:
+- A) 1-10 characters
+- B) 3-24 characters, globally unique ✅
+- C) 5-50 characters
+- D) Any length
+
+### Q4. Storage account name can contain:
+- A) Only uppercase letters
+- B) Lowercase letters and numbers only ✅
+- C) Special characters
+- D) Spaces
+
+### Q5. The maximum number of storage accounts per subscription is:
+- A) 50
+- B) 100
+- C) 250 ✅
+- D) Unlimited
+
+### Q6. Storage account endpoint format for Blob is:
+- A) https://accountname.azure.com
+- B) https://accountname.blob.core.windows.net ✅
+- C) https://blob.accountname.com
+- D) https://accountname.storage.azure.com
+
+### Q7. Which is NOT a valid storage account type?
+- A) StorageV2 (general-purpose v2)
+- B) BlobStorage
+- C) FileStorage
+- D) DatabaseStorage ✅
+
+### Q8. Recommended storage account type for most scenarios is:
+- A) Storage (general-purpose v1)
+- B) StorageV2 (general-purpose v2) ✅
+- C) BlobStorage
+- D) BlockBlobStorage
+
+### Q9. Storage account can be created using:
+- A) Only Azure Portal
+- B) Portal, CLI, PowerShell, ARM templates, Terraform ✅
+- C) Only CLI
+- D) Only PowerShell
+
+### Q10. Which resource must be created before a storage account?
+- A) Virtual Machine
+- B) Resource Group ✅
+- C) Virtual Network
+- D) Key Vault
+
+---
+
+## 📌 SECTION 2: Storage Account Types & Performance Tiers
+
+### Q11. General-purpose v2 storage account supports:
+- A) Only Blob
+- B) Blob, File, Queue, Table, and Data Lake ✅
+- C) Only File
+- D) Only Queue
+
+### Q12. Performance tiers in Azure Storage are:
+- A) Basic and Premium
+- B) Standard and Premium ✅
+- C) Free and Paid
+- D) Hot and Cold
+
+### Q13. Standard performance tier uses:
+- A) SSD storage
+- B) HDD storage ✅
+- C) RAM storage
+- D) Tape storage
+
+### Q14. Premium performance tier uses:
+- A) HDD storage
+- B) SSD storage ✅
+- C) Tape storage
+- D) Optical storage
+
+### Q15. Premium Block Blob storage is best for:
+- A) Archive data
+- B) High transaction rates and low latency ✅
+- C) Backup only
+- D) Large file shares
+
+### Q16. Premium File Shares use which protocol?
+- A) HTTP only
+- B) SMB and NFS ✅
+- C) FTP only
+- D) SSH
+
+### Q17. Which account type supports only Blob storage?
+- A) StorageV2
+- B) BlobStorage ✅
+- C) FileStorage
+- D) General-purpose v1
+
+### Q18. BlockBlobStorage account is optimized for:
+- A) Page blobs
+- B) Block blobs and append blobs ✅
+- C) File shares
+- D) Tables
+
+### Q19. Can you change performance tier after creation?
+- A) Yes, anytime
+- B) No, cannot be changed ✅
+- C) Only within 24 hours
+- D) Only for Blob storage
+
+### Q20. FileStorage account supports:
+- A) Only standard tier
+- B) Only premium tier ✅
+- C) Both tiers
+- D) Neither
+
+---
+
+## 📌 SECTION 3: Azure Blob Storage Fundamentals
+
+### Q21. Blob stands for:
+- A) Binary Large Object ✅
+- B) Basic Large Object
+- C) Binary Linked Object
+- D) Basic Linked Object
+
+### Q22. Azure Blob Storage is optimized for:
+- A) Structured data
+- B) Unstructured data ✅
+- C) Relational data
+- D) Graph data
+
+### Q23. Which is NOT a use case for Blob storage?
+- A) Serving images to browser
+- B) Storing files for distributed access
+- C) Real-time relational database queries ✅
+- D) Streaming video and audio
+
+### Q24. The hierarchy in Blob storage is:
+- A) Container → Storage Account → Blob
+- B) Storage Account → Container → Blob ✅
+- C) Blob → Container → Storage Account
+- D) Resource Group → Blob → Container
+
+### Q25. A container in Blob storage is similar to:
+- A) A database
+- B) A folder/directory ✅
+- C) A file
+- D) A virtual machine
+
+### Q26. Container names must be:
+- A) 1-50 characters
+- B) 3-63 characters ✅
+- C) 5-100 characters
+- D) Any length
+
+### Q27. Container names can contain:
+- A) Uppercase letters
+- B) Lowercase letters, numbers, and hyphens ✅
+- C) Spaces
+- D) Underscores
+
+### Q28. Maximum size of a single block blob is:
+- A) 5 TB
+- B) 190.7 TB ✅
+- C) 8 TB
+- D) 1 PB
+
+### Q29. Maximum number of containers per storage account:
+- A) 100
+- B) 500
+- C) No limit ✅
+- D) 1000
+
+### Q30. Maximum number of blobs per container:
+- A) 1 million
+- B) 100 million
+- C) No limit ✅
+- D) 10 million
+
+---
+
+## 📌 SECTION 4: Blob Types
+
+### Q31. How many types of blobs are there in Azure?
+- A) 2
+- B) 3 ✅
+- C) 4
+- D) 5
+
+### Q32. The three types of blobs are:
+- A) Small, Medium, Large
+- B) Block, Append, Page ✅
+- C) Hot, Cool, Archive
+- D) Standard, Premium, Ultra
+
+### Q33. Block blobs are optimized for:
+- A) Random read/write
+- B) Uploading large files efficiently ✅
+- C) Log files only
+- D) Virtual machine disks
+
+### Q34. Append blobs are optimized for:
+- A) Random access
+- B) Append operations (logging) ✅
+- C) Virtual machine disks
+- D) Image storage
+
+### Q35. Page blobs are optimized for:
+- A) Log files
+- B) Random read/write operations (VHDs) ✅
+- C) Video streaming
+- D) Text files
+
+### Q36. Azure VM disks are stored as:
+- A) Block blobs
+- B) Page blobs ✅
+- C) Append blobs
+- D) File shares
+
+### Q37. Maximum size of a page blob is:
+- A) 4.75 TB
+- B) 8 TB ✅
+- C) 190.7 TB
+- D) 1 TB
+
+### Q38. Maximum size of an append blob is:
+- A) 100 GB
+- B) 195 GB ✅
+- C) 1 TB
+- D) 5 TB
+
+### Q39. A block in block blob can be maximum:
+- A) 100 MB
+- B) 4000 MB (4 GB) ✅
+- C) 1 GB
+- D) 500 MB
+
+### Q40. Maximum number of blocks in a block blob:
+- A) 10,000
+- B) 50,000 ✅
+- C) 100,000
+- D) 1,000
+
+---
+
+## 📌 SECTION 5: Access Tiers (Hot, Cool, Cold, Archive)
+
+### Q41. Access tiers in Azure Blob Storage are:
+- A) Only Hot and Cold
+- B) Hot, Cool, Cold, Archive ✅
+- C) Only Hot and Archive
+- D) Standard and Premium
+
+### Q42. Hot access tier is best for:
+- A) Rarely accessed data
+- B) Frequently accessed data ✅
+- C) Archived data
+- D) Deleted data
+
+### Q43. Cool access tier is best for:
+- A) Frequently accessed data
+- B) Infrequently accessed, stored for at least 30 days ✅
+- C) Archived data
+- D) Real-time data
+
+### Q44. Cold access tier minimum storage duration is:
+- A) 30 days
+- B) 90 days ✅
+- C) 180 days
+- D) 365 days
+
+### Q45. Archive access tier is best for:
+- A) Frequently accessed data
+- B) Rarely accessed, stored for at least 180 days ✅
+- C) Real-time data
+- D) Active databases
+
+### Q46. Which tier has highest storage cost?
+- A) Hot ✅
+- B) Cool
+- C) Cold
+- D) Archive
+
+### Q47. Which tier has lowest storage cost?
+- A) Hot
+- B) Cool
+- C) Cold
+- D) Archive ✅
+
+### Q48. Which tier has highest access/retrieval cost?
+- A) Hot
+- B) Cool
+- C) Cold
+- D) Archive ✅
+
+### Q49. Archive tier blobs are:
+- A) Immediately accessible
+- B) Offline and need rehydration ✅
+- C) Deleted automatically
+- D) Read-only
+
+### Q50. Rehydration of archive blob can take:
+- A) Seconds
+- B) Minutes
+- C) Up to 15 hours (standard) ✅
+- D) Days
+
+### Q51. High priority rehydration takes:
+- A) Up to 15 hours
+- B) Under 1 hour for < 10 GB ✅
+- C) Instantly
+- D) 24 hours
+
+### Q52. Access tier can be set at:
+- A) Only account level
+- B) Account level and blob level ✅
+- C) Only blob level
+- D) Only container level
+
+### Q53. Default access tier for storage account is:
+- A) Cool
+- B) Hot ✅
+- C) Archive
+- D) Cold
+
+### Q54. Which tier is NOT available at account level?
+- A) Hot
+- B) Cool
+- C) Archive ✅
+- D) Both Hot and Cool
+
+### Q55. Early deletion fee applies when:
+- A) Deleting hot tier data
+- B) Deleting cool/cold/archive data before minimum retention ✅
+- C) Never
+- D) Deleting any data
+
+---
+
+## 📌 SECTION 6: Container Access Levels
+
+### Q56. Container access levels determine:
+- A) Storage cost
+- B) Public accessibility of blobs ✅
+- C) Performance tier
+- D) Replication type
+
+### Q57. How many container access levels are there?
+- A) 2
+- B) 3 ✅
+- C) 4
+- D) 5
+
+### Q58. Private access level means:
+- A) Anyone can access
+- B) No anonymous access, authentication required ✅
+- C) Only blobs are accessible
+- D) Container is deleted
+
+### Q59. Blob access level (anonymous read for blobs) means:
+- A) Container listing is public
+- B) Only blobs can be accessed anonymously if URL known ✅
+- C) Full public access
+- D) No access
+
+### Q60. Container access level means:
+- A) Only blobs accessible
+- B) Container listing and blobs are publicly accessible ✅
+- C) No access
+- D) Only metadata accessible
+
+### Q61. Default access level for new containers is:
+- A) Blob
+- B) Container
+- C) Private ✅
+- D) Public
+
+### Q62. To serve images on a website without authentication, use:
+- A) Private
+- B) Blob or Container access level ✅
+- C) Archive tier
+- D) No access level
+
+### Q63. Public access can be disabled at:
+- A) Only container level
+- B) Storage account level ✅
+- C) Only blob level
+- D) Only subscription level
+
+### Q64. When storage account disables public access:
+- A) All containers become public
+- B) All containers become private regardless of setting ✅
+- C) Nothing changes
+- D) Account is deleted
+
+### Q65. Anonymous access is recommended for:
+- A) Sensitive data
+- B) Public content like images, documents ✅
+- C) Financial data
+- D) Healthcare data
+
+---
+
+## 📌 SECTION 7: Uploading, Downloading, and Deleting Blobs
+
+### Q66. Methods to upload blobs include:
+- A) Only Azure Portal
+- B) Portal, Storage Explorer, CLI, PowerShell, SDK, AzCopy ✅
+- C) Only CLI
+- D) Only REST API
+
+### Q67. Azure Storage Explorer is:
+- A) A web browser
+- B) A standalone GUI application for managing storage ✅
+- C) A command-line tool
+- D) A mobile app
+
+### Q68. AzCopy is:
+- A) A GUI tool
+- B) A command-line utility for copying data ✅
+- C) A programming language
+- D) A storage account type
+
+### Q69. Maximum file size for single PUT upload (without blocks):
+- A) 50 MB
+- B) 256 MB ✅
+- C) 1 GB
+- D) 5 GB
+
+### Q70. For files larger than 256 MB, use:
+- A) Single PUT
+- B) Block upload (Put Block + Put Block List) ✅
+- C) Cannot upload
+- D) Only AzCopy
+
+### Q71. CLI command to upload a blob is:
+- A) az blob upload
+- B) az storage blob upload ✅
+- C) az upload blob
+- D) az blob put
+
+### Q72. CLI command to download a blob is:
+- A) az storage blob download ✅
+- B) az blob download
+- C) az download blob
+- D) az blob get
+
+### Q73. CLI command to delete a blob is:
+- A) az blob remove
+- B) az storage blob delete ✅
+- C) az delete blob
+- D) az blob del
+
+### Q74. PowerShell cmdlet to upload a blob is:
+- A) Upload-AzBlob
+- B) Set-AzStorageBlobContent ✅
+- C) New-AzBlob
+- D) Add-AzBlob
+
+### Q75. PowerShell cmdlet to download a blob is:
+- A) Get-AzStorageBlobContent ✅
+- B) Download-AzBlob
+- C) Receive-AzBlob
+- D) Read-AzBlob
+
+### Q76. To upload a folder recursively, use:
+- A) Portal only
+- B) AzCopy or Storage Explorer ✅
+- C) Cannot upload folders
+- D) REST API only
+
+### Q77. Drag and drop upload is supported in:
+- A) CLI
+- B) Azure Portal and Storage Explorer ✅
+- C) PowerShell
+- D) AzCopy
+
+### Q78. Blob metadata is:
+- A) The blob content
+- B) Name-value pairs associated with blob ✅
+- C) Access tier
+- D) Container name
+
+### Q79. Maximum size of blob metadata:
+- A) 2 KB
+- B) 8 KB ✅
+- C) 64 KB
+- D) 1 MB
+
+### Q80. When deleting a container:
+- A) Only container is deleted
+- B) Container and all blobs inside are deleted ✅
+- C) Blobs remain
+- D) Nothing is deleted
+
+---
+
+## 📌 SECTION 8: Access Keys and Shared Access Signatures (SAS)
+
+### Q81. Each storage account has how many access keys?
+- A) 1
+- B) 2 ✅
+- C) 3
+- D) 4
+
+### Q82. Two access keys allow:
+- A) Two users to access
+- B) Key rotation without downtime ✅
+- C) Faster access
+- D) More storage
+
+### Q83. Access keys provide:
+- A) Read-only access
+- B) Full access to storage account ✅
+- C) No access
+- D) Write-only access
+
+### Q84. Access keys should be:
+- A) Shared publicly
+- B) Kept secret and rotated regularly ✅
+- C) Written in code
+- D) Never used
+
+### Q85. SAS stands for:
+- A) Storage Access Service
+- B) Shared Access Signature ✅
+- C) Secure Access Storage
+- D) Simple Access Service
+
+### Q86. SAS provides:
+- A) Full account access
+- B) Delegated, limited access with defined permissions ✅
+- C) No access
+- D) Only read access
+
+### Q87. Types of SAS include:
+- A) Only Account SAS
+- B) Account SAS, Service SAS, User Delegation SAS ✅
+- C) Only Service SAS
+- D) Only User SAS
+
+### Q88. User Delegation SAS is secured with:
+- A) Account key
+- B) Azure AD credentials ✅
+- C) No security
+- D) Password
+
+### Q89. SAS token includes:
+- A) Only permissions
+- B) Permissions, expiry time, allowed IPs, protocols ✅
+- C) Only expiry time
+- D) Only IP addresses
+
+### Q90. SAS URL format includes:
+- A) Only blob URL
+- B) Blob URL + SAS token parameters ✅
+- C) Only token
+- D) Only account key
+
+### Q91. Best practice for SAS is:
+- A) Long expiry time
+- B) Short expiry time, minimum permissions ✅
+- C) Full permissions
+- D) No expiry
+
+### Q92. Stored Access Policy:
+- A) Cannot be modified
+- B) Allows SAS management and revocation ✅
+- C) Is a SAS type
+- D) Provides more permissions
+
+### Q93. Maximum stored access policies per container:
+- A) 1
+- B) 5 ✅
+- C) 10
+- D) Unlimited
+
+### Q94. To revoke a SAS immediately:
+- A) Wait for expiry
+- B) Delete stored access policy or regenerate key ✅
+- C) Cannot revoke
+- D) Delete the blob
+
+### Q95. Which SAS type is most secure?
+- A) Account SAS
+- B) Service SAS
+- C) User Delegation SAS ✅
+- D) All are equal
+
+---
+
+## 📌 SECTION 9: Azure Data Lake Storage Gen2
+
+### Q96. Azure Data Lake Storage Gen2 is:
+- A) Separate from Blob Storage
+- B) Built on top of Blob Storage ✅
+- C) A database service
+- D) A VM service
+
+### Q97. Data Lake Storage Gen2 enables:
+- A) Only blob access
+- B) Hierarchical namespace ✅
+- C) Only file access
+- D) Only table access
+
+### Q98. Hierarchical namespace provides:
+- A) Flat structure
+- B) True directory structure with atomic operations ✅
+- C) No structure
+- D) Only blob structure
+
+### Q99. Data Lake Storage Gen2 is enabled by:
+- A) Creating new account type
+- B) Enabling hierarchical namespace on storage account ✅
+- C) Using premium tier
+- D) Using archive tier
+
+### Q100. ADLS Gen2 supports which protocols?
+- A) Only REST
+- B) REST API, ABFS driver, Blob API ✅
+- C) Only Blob API
+- D) Only HDFS
+
+### Q101. ABFS stands for:
+- A) Azure Basic File System
+- B) Azure Blob File System ✅
+- C) Azure Binary File System
+- D) Azure Backup File System
+
+### Q102. ADLS Gen2 is commonly used for:
+- A) Simple file storage
+- B) Big data analytics ✅
+- C) Email storage
+- D) VM disks
+
+### Q103. Can hierarchical namespace be enabled after account creation?
+- A) No, must be set during creation
+- B) Yes, can be upgraded ✅
+- C) Only with premium tier
+- D) Only for blob storage accounts
+
+### Q104. ACLs in ADLS Gen2 provide:
+- A) Only read access
+- B) POSIX-like file and folder permissions ✅
+- C) No access control
+- D) Only write access
+
+### Q105. ADLS Gen2 integrates with:
+- A) Only Azure Portal
+- B) Azure Synapse, Databricks, HDInsight ✅
+- C) Only Databricks
+- D) Only HDInsight
+
+---
+
+## 📌 SECTION 10: Querying CSV Data in Blob Storage
+
+### Q106. To run SQL queries on CSV in Blob Storage, use:
+- A) Azure SQL Database
+- B) Azure Synapse Analytics Serverless SQL ✅
+- C) Azure Cosmos DB
+- D) Azure Table Storage
+
+### Q107. Query acceleration in Blob Storage:
+- A) Is not available
+- B) Allows filtering data before retrieval ✅
+- C) Speeds up uploads
+- D) Deletes data faster
+
+### Q108. OPENROWSET in Synapse SQL is used to:
+- A) Create tables
+- B) Query external data files directly ✅
+- C) Delete files
+- D) Upload files
+
+### Q109. Serverless SQL pool in Synapse:
+- A) Requires provisioned resources
+- B) Pay per query, no infrastructure management ✅
+- C) Is free
+- D) Requires VMs
+
+### Q110. To query a CSV file in Synapse, use:
+```sql
+SELECT * FROM OPENROWSET(
+    BULK 'https://account.blob.core.windows.net/container/file.csv',
+    FORMAT = '____'
+) AS result
+```
+- A) 'TXT'
+- B) 'CSV' ✅
+- C) 'JSON'
+- D) 'XML'
+
+### Q111. HEADER_ROW option in OPENROWSET:
+- A) Deletes header
+- B) Uses first row as column names ✅
+- C) Adds header
+- D) Ignores all rows
+
+### Q112. Parser version for CSV in Synapse:
+- A) 1.0 only
+- B) 1.0 and 2.0 ✅
+- C) 3.0 only
+- D) No versions
+
+### Q113. Parser version 2.0 in Synapse:
+- A) Is slower
+- B) Is faster and recommended ✅
+- C) Is deprecated
+- D) Is only for JSON
+
+### Q114. To specify delimiter in OPENROWSET, use:
+- A) SEPARATOR
+- B) FIELDTERMINATOR ✅
+- C) DELIMITER
+- D) SPLIT
+
+### Q115. To query CSV with schema inference:
+```sql
+SELECT * FROM OPENROWSET(...) 
+WITH (column1 datatype, column2 datatype) AS result
+```
+WITH clause is used to:
+- A) Delete columns
+- B) Define explicit schema ✅
+- C) Add rows
+- D) Create table
+
+### Q116. Synapse serverless SQL can query:
+- A) Only CSV
+- B) CSV, Parquet, JSON ✅
+- C) Only Parquet
+- D) Only JSON
+
+### Q117. Parquet format is:
+- A) Row-based
+- B) Column-based, optimized for analytics ✅
+- C) Text-based
+- D) Image format
+
+### Q118. CETAS in Synapse stands for:
+- A) Create External Table And Select
+- B) Create External Table As Select ✅
+- C) Create External Table After Select
+- D) Create External Table Always Select
+
+### Q119. External tables in Synapse:
+- A) Store data in Synapse
+- B) Reference data in external storage ✅
+- C) Copy data
+- D) Delete data
+
+### Q120. Credential is needed in Synapse to:
+- A) Query public data
+- B) Access private storage accounts ✅
+- C) Create tables
+- D) Delete files
+
+---
+
+## 📌 SECTION 11: Azure Storage Explorer
+
+### Q121. Azure Storage Explorer runs on:
+- A) Only Windows
+- B) Windows, macOS, and Linux ✅
+- C) Only macOS
+- D) Only Linux
+
+### Q122. Storage Explorer can connect using:
+- A) Only Azure AD
+- B) Azure AD, Account key, SAS, Connection string ✅
+- C) Only account key
+- D) Only SAS
+
+### Q123. Storage Explorer supports:
+- A) Only Blob storage
+- B) Blob, File, Queue, Table, Cosmos DB ✅
+- C) Only File storage
+- D) Only Queue storage
+
+### Q124. In Storage Explorer, to upload a file:
+- A) Use command line only
+- B) Click Upload button or drag-and-drop ✅
+- C) Cannot upload
+- D) Use REST API
+
+### Q125. Storage Explorer can manage:
+- A) Only Azure storage
+- B) Azure storage and emulators ✅
+- C) Only emulators
+- D) Only local files
+
+### Q126. Azure Storage Emulator / Azurite:
+- A) Is a production service
+- B) Provides local storage emulation for development ✅
+- C) Is deprecated
+- D) Is a premium service
+
+### Q127. To download multiple blobs in Storage Explorer:
+- A) Download one by one only
+- B) Select multiple and click Download ✅
+- C) Cannot download multiple
+- D) Use CLI only
+
+### Q128. Storage Explorer shows:
+- A) Only blob content
+- B) Blob properties, metadata, snapshots, versions ✅
+- C) Only properties
+- D) Only metadata
+
+### Q129. AzCopy is integrated into:
+- A) Azure Portal only
+- B) Storage Explorer for large transfers ✅
+- C) CLI only
+- D) Not integrated anywhere
+
+### Q130. Storage Explorer can generate:
+- A) Access keys
+- B) SAS tokens ✅
+- C) New storage accounts
+- D) Virtual machines
+
+---
+
+## 📌 SECTION 12: Replication Options
+
+### Q131. Azure Storage replication protects against:
+- A) User errors only
+- B) Hardware failures and disasters ✅
+- C) Nothing
+- D) Only network issues
+
+### Q132. LRS stands for:
+- A) Local Redundant Storage
+- B) Locally Redundant Storage ✅
+- C) Large Redundant Storage
+- D) Limited Redundant Storage
+
+### Q133. LRS replicates data:
+- A) Across regions
+- B) Three times within single data center ✅
+- C) Across zones
+- D) Six times
+
+### Q134. ZRS stands for:
+- A) Zonal Redundant Storage
+- B) Zone-Redundant Storage ✅
+- C) Zero Redundant Storage
+- D) Zip Redundant Storage
+
+### Q135. ZRS replicates data across:
+- A) Regions
+- B) Three availability zones in one region ✅
+- C) Data centers
+- D) Subscriptions
+
+### Q136. GRS stands for:
+- A) Global Redundant Storage
+- B) Geo-Redundant Storage ✅
+- C) General Redundant Storage
+- D) Geographic Redundant Storage
+
+### Q137. GRS replicates data to:
+- A) Same region only
+- B) Secondary region hundreds of miles away ✅
+- C) Same data center
+- D) Same zone
+
+### Q138. With GRS, secondary region data is:
+- A) Always readable
+- B) Readable only during failover ✅
+- C) Writable
+- D) Deleted
+
+### Q139. RA-GRS stands for:
+- A) Read Access Geo-Redundant Storage ✅
+- B) Random Access Geo-Redundant Storage
+- C) Rapid Access Geo-Redundant Storage
+- D) Real-time Access Geo-Redundant Storage
+
+### Q140. RA-GRS provides:
+- A) Write access to secondary
+- B) Read access to secondary region ✅
+- C) No access to secondary
+- D) Delete access to secondary
+
+### Q141. GZRS combines:
+- A) GRS and LRS
+- B) GRS and ZRS ✅
+- C) LRS and ZRS
+- D) LRS only
+
+### Q142. Total copies of data with GRS:
+- A) 3
+- B) 6 ✅
+- C) 4
+- D) 9
+
+### Q143. Cheapest replication option:
+- A) GRS
+- B) LRS ✅
+- C) ZRS
+- D) GZRS
+
+### Q144. Most durable replication option:
+- A) LRS
+- B) ZRS
+- C) GRS
+- D) RA-GZRS ✅
+
+### Q145. Durability of Azure Storage (LRS) is:
+- A) 99%
+- B) 99.9%
+- C) 99.999999999% (11 nines) ✅
+- D) 100%
+
+---
+
+## 📌 SECTION 13: Lifecycle Management
+
+### Q146. Lifecycle management policies:
+- A) Are not available
+- B) Automatically transition or delete blobs ✅
+- C) Only delete blobs
+- D) Only move blobs
+
+### Q147. Lifecycle rules are based on:
+- A) Blob size only
+- B) Last modified or created date ✅
+- C) Blob name only
+- D) User who created
+
+### Q148. Lifecycle actions include:
+- A) Only delete
+- B) Tier to cool/cold/archive, delete ✅
+- C) Only tier change
+- D) Only move
+
+### Q149. Lifecycle policies apply to:
+- A) Only block blobs
+- B) Block and append blobs ✅
+- C) Only page blobs
+- D) All blob types equally
+
+### Q150. Lifecycle rules run:
+- A) Immediately
+- B) Once per day ✅
+- C) Every hour
+- D) Every minute
+
+### Q151. Filter in lifecycle rule can use:
+- A) Only container name
+- B) Blob prefix and blob index tags ✅
+- C) Only blob size
+- D) Only creation date
+
+### Q152. Example lifecycle rule: Move to cool after:
+- A) 0 days
+- B) 30 days of no modification ✅
+- C) Always immediately
+- D) Never
+
+### Q153. Delete blob after 365 days rule:
+- A) Cannot be created
+- B) Automatically deletes old blobs ✅
+- C) Moves to archive
+- D) Changes access level
+
+### Q154. Lifecycle policies are defined in:
+- A) XML
+- B) JSON ✅
+- C) YAML
+- D) CSV
+
+### Q155. Maximum number of rules per policy:
+- A) 10
+- B) 100 ✅
+- C) 1000
+- D) Unlimited
+
+---
+
+## 📌 SECTION 14: Soft Delete and Versioning
+
+### Q156. Soft delete for blobs:
+- A) Permanently deletes immediately
+- B) Retains deleted blobs for recovery ✅
+- C) Is not available
+- D) Only works for containers
+
+### Q157. Default soft delete retention period can be:
+- A) 1 to 7 days
+- B) 1 to 365 days ✅
+- C) Only 7 days
+- D) Only 30 days
+
+### Q158. Soft delete for containers:
+- A) Is not available
+- B) Allows container recovery ✅
+- C) Only works with premium
+- D) Deletes containers immediately
+
+### Q159. Blob versioning:
+- A) Is not available
+- B) Automatically maintains previous versions ✅
+- C) Requires manual copies
+- D) Only works with archive tier
+
+### Q160. When versioning is enabled, overwriting a blob:
+- A) Deletes previous version
+- B) Creates new version, keeps previous ✅
+- C) Fails
+- D) Merges content
+
+### Q161. Previous versions can be:
+- A) Only deleted
+- B) Restored, downloaded, or promoted ✅
+- C) Only viewed
+- D) Only archived
+
+### Q162. Point-in-time restore requires:
+- A) Only soft delete
+- B) Versioning, soft delete, and change feed ✅
+- C) Only versioning
+- D) Nothing
+
+### Q163. Change feed:
+- A) Deletes changes
+- B) Provides log of blob changes ✅
+- C) Creates changes
+- D) Stops changes
+
+### Q164. Immutable storage:
+- A) Allows modification
+- B) Prevents modification and deletion (WORM) ✅
+- C) Is mutable
+- D) Deletes data
+
+### Q165. WORM stands for:
+- A) Write Once Read Multiple
+- B) Write Once Read Many ✅
+- C) Write Only Read Many
+- D) Write Once Remove Many
+
+---
+
+## 📌 SECTION 15: Security Features
+
+### Q166. Azure Storage encryption at rest uses:
+- A) No encryption
+- B) 256-bit AES encryption ✅
+- C) 128-bit encryption
+- D) 64-bit encryption
+
+### Q167. Storage encryption is:
+- A) Optional
+- B) Enabled by default, cannot be disabled ✅
+- C) Only for premium
+- D) Disabled by default
+
+### Q168. Encryption key can be managed by:
+- A) Only Microsoft
+- B) Microsoft-managed or customer-managed keys ✅
+- C) Only customer
+- D) Neither
+
+### Q169. Customer-managed keys are stored in:
+- A) Storage account
+- B) Azure Key Vault ✅
+- C) Azure AD
+- D) File share
+
+### Q170. Encryption in transit uses:
+- A) HTTP
+- B) HTTPS (TLS) ✅
+- C) FTP
+- D) Telnet
+
+### Q171. Require secure transfer setting:
+- A) Allows HTTP
+- B) Forces HTTPS only ✅
+- C) Disables encryption
+- D) Is deprecated
+
+### Q172. Minimum TLS version can be set to:
+- A) TLS 1.0
+- B) TLS 1.2 ✅
+- C) SSL 3.0
+- D) TLS 0.9
+
+### Q173. Storage firewall allows:
+- A) All networks
+- B) Restricting access to specific VNets/IPs ✅
+- C) No access
+- D) Only Azure services
+
+### Q174. Private endpoint for storage:
+- A) Is public
+- B) Provides private IP within VNet ✅
+- C) Is not available
+- D) Requires public IP
+
+### Q175. Service endpoint for storage:
+- A) Changes storage IP
+- B) Optimizes traffic within Azure backbone ✅
+- C) Is a public endpoint
+- D) Deletes endpoints
+
+---
+
+## 📌 SECTION 16: Static Website Hosting
+
+### Q176. Azure Blob Storage can host:
+- A) Dynamic websites only
+- B) Static websites ✅
+- C) No websites
+- D) Only APIs
+
+### Q177. Static website hosting creates which container?
+- A) $web ✅
+- B) $static
+- C) $public
+- D) $website
+
+### Q178. Default document for static website:
+- A) default.html
+- B) index.html ✅
+- C) home.html
+- D) main.html
+
+### Q179. Error document path is for:
+- A) Logs
+- B) Custom 404 error page ✅
+- C) Success page
+- D) Home page
+
+### Q180. Static website endpoint format:
+- A) accountname.blob.core.windows.net
+- B) accountname.z[zone].web.core.windows.net ✅
+- C) accountname.static.azure.com
+- D) accountname.web.azure.com
+
+### Q181. To use custom domain with static website:
+- A) Cannot be done
+- B) Configure custom domain or Azure CDN ✅
+- C) Only with premium
+- D) Requires VM
+
+### Q182. SSL for custom domain requires:
+- A) Nothing extra
+- B) Azure CDN or managed certificate ✅
+- C) Self-signed certificate only
+- D) No SSL available
+
+### Q183. Static website content is served from:
+- A) Hot tier always
+- B) The $web container ✅
+- C) Cool tier always
+- D) Archive tier
+
+### Q184. Static websites are good for:
+- A) Database applications
+- B) SPA, documentation, landing pages ✅
+- C) Real-time apps
+- D) Gaming servers
+
+### Q185. Static website access is:
+- A) Private by default
+- B) Anonymous read access ✅
+- C) Requires authentication
+- D) Blocked by default
+
+---
+
+## 📌 SECTION 17: Azure CLI Commands for Blob Storage
+
+### Q186. Create a storage account:
+- A) az storage create
+- B) az storage account create ✅
+- C) az create storage
+- D) az new storage
+
+### Q187. Create a container:
+- A) az container create
+- B) az storage container create ✅
+- C) az blob container create
+- D) az create container
+
+### Q188. List containers:
+- A) az storage container list ✅
+- B) az container list
+- C) az blob container list
+- D) az list containers
+
+### Q189. Upload blob with CLI:
+```
+az storage blob upload --account-name <name> --container-name <container> --name <blob-name> --file <path> --____
+```
+What parameter specifies authentication?
+- A) --key
+- B) --auth-mode login ✅
+- C) --password
+- D) --credential
+
+### Q190. Download blob with CLI:
+```
+az storage blob download --account-name <name> --container-name <container> --name <blob-name> --file <path>
+```
+This command downloads to:
+- A) Azure
+- B) Local file system ✅
+- C) Another container
+- D) Database
+
+### Q191. Delete a container:
+- A) az container delete
+- B) az storage container delete ✅
+- C) az blob container delete
+- D) az remove container
+
+### Q192. Set blob tier:
+- A) az blob tier set
+- B) az storage blob set-tier ✅
+- C) az tier blob
+- D) az change tier
+
+### Q193. Generate SAS token with CLI:
+- A) az sas generate
+- B) az storage blob generate-sas ✅
+- C) az generate sas
+- D) az create sas
+
+### Q194. Copy blob between containers:
+- A) az blob move
+- B) az storage blob copy start ✅
+- C) az move blob
+- D) az blob transfer
+
+### Q195. List blobs in container:
+- A) az blob list
+- B) az storage blob list ✅
+- C) az list blobs
+- D) az container blob list
+
+---
+
+## 📌 SECTION 18: Monitoring and Logging
+
+### Q196. Storage Analytics provides:
+- A) Only metrics
+- B) Metrics and logging ✅
+- C) Only logging
+- D) Neither
+
+### Q197. Azure Monitor for storage shows:
+- A) Only errors
+- B) Metrics like availability, latency, transactions ✅
+- C) Only availability
+- D) Nothing
+
+### Q198. Diagnostic settings send logs to:
+- A) Only Log Analytics
+- B) Log Analytics, Storage, Event Hub ✅
+- C) Only Storage
+- D) Only Event Hub
+
+### Q199. Blob storage logs include:
+- A) Only read operations
+- B) Read, write, delete operations ✅
+- C) Only delete operations
+- D) Only write operations
+
+### Q200. $logs container stores:
+- A) Blob data
+- B) Storage Analytics logs ✅
+- C) Metrics
+- D) Deleted blobs
+
+---
+
+## 📌 SECTION 19: Practical Scenario Questions
+
+### Q201. You need to store images accessed frequently. Which tier?
+- A) Cool
+- B) Hot ✅
+- C) Archive
+- D) Cold
+
+### Q202. You have log files rarely accessed but need 30+ days retention. Which tier?
+- A) Hot
+- B) Cool ✅
+- C) Archive
+- D) Premium
+
+### Q203. Backup data that won't be accessed for years. Which tier?
+- A) Hot
+- B) Cool
+- C) Archive ✅
+- D) Cold
+
+### Q204. To run SQL queries on CSV without creating tables, use:
+- A) Azure SQL
+- B) Synapse Serverless SQL with OPENROWSET ✅
+- C) Cosmos DB
+- D) Azure Table
+
+### Q205. You need VM disk storage. Which blob type?
+- A) Block blob
+- B) Page blob ✅
+- C) Append blob
+- D) Any type
+
+### Q206. Application writes log entries continuously. Which blob type?
+- A) Block blob
+- B) Append blob ✅
+- C) Page blob
+- D) Any type
+
+### Q207. Upload large video file (50 GB). Which blob type?
+- A) Append blob
+- B) Block blob ✅
+- C) Page blob
+- D) Cannot upload
+
+### Q208. Need to replicate data to another region for DR:
+- A) LRS
+- B) ZRS
+- C) GRS ✅
+- D) None
+
+### Q209. Data must stay in single region but survive zone failure:
+- A) LRS
+- B) ZRS ✅
+- C) GRS
+- D) RA-GRS
+
+### Q210. Need read access in secondary region:
+- A) GRS
+- B) RA-GRS ✅
+- C) LRS
+- D) ZRS
+
+### Q211. Delete blob but allow recovery for 30 days:
+- A) Use archive tier
+- B) Enable soft delete ✅
+- C) Use cool tier
+- D) Use LRS
+
+### Q212. Automatically move files to cool after 90 days:
+- A) Manual process
+- B) Lifecycle management policy ✅
+- C) Azure Automation
+- D) Cannot be done
+
+### Q213. Serve static website from blob storage:
+- A) Enable static website feature ✅
+- B) Create VM
+- C) Use Azure App Service
+- D) Cannot be done
+
+### Q214. Grant temporary access to a blob without sharing keys:
+- A) Share access key
+- B) Generate SAS token ✅
+- C) Make container public
+- D) Send password
+
+### Q215. Query CSV data without loading into database:
+- A) Azure SQL Database
+- B) Synapse Serverless SQL Pool ✅
+- C) Cosmos DB
+- D) Azure Table Storage
+
+---
+
+## 📌 SECTION 20: SQL Query Syntax for CSV (Synapse)
+
+### Q216. Basic OPENROWSET syntax starts with:
+```sql
+SELECT * FROM OPENROWSET(
+    BULK '____',
+    FORMAT = 'CSV'
+) AS [result]
+```
+BULK parameter contains:
+- A) Table name
+- B) Blob URL path ✅
+- C) Database name
+- D) Column names
+
+### Q217. To skip header row in CSV:
+```sql
+OPENROWSET(...) 
+WITH (HEADER_ROW = ____)
+```
+- A) FALSE
+- B) TRUE ✅
+- C) SKIP
+- D) IGNORE
+
+### Q218. To query specific columns from CSV:
+```sql
+SELECT column1, column2 FROM OPENROWSET(...)
+WITH (
+    column1 VARCHAR(50),
+    column2 INT
+) AS result
+```
+This query:
+- A) Returns all columns
+- B) Returns only specified columns with defined types ✅
+- C) Fails
+- D) Deletes columns
+
+### Q219. To filter CSV data:
+```sql
+SELECT * FROM OPENROWSET(...)
+WHERE column1 = 'value'
+```
+WHERE clause:
+- A) Is not supported
+- B) Filters results like regular SQL ✅
+- C) Only works with numbers
+- D) Deletes rows
+
+### Q220. Aggregate function on CSV:
+```sql
+SELECT COUNT(*), SUM(amount) FROM OPENROWSET(...)
+```
+This:
+- A) Is not allowed
+- B) Performs aggregation on CSV data ✅
+- C) Fails always
+- D) Only counts
+
+### Q221. To query all CSV files in a folder:
+```sql
+BULK 'https://account.blob.core.windows.net/container/folder/*.csv'
+```
+The * wildcard:
+- A) Is not supported
+- B) Matches all CSV files in folder ✅
+- C) Only matches one file
+- D) Creates new files
+
+### Q222. FIELDTERMINATOR = ',' specifies:
+- A) Row ending
+- B) Column delimiter ✅
+- C) File type
+- D) Encoding
+
+### Q223. ROWTERMINATOR = '\n' specifies:
+- A) Column delimiter
+- B) Row ending character ✅
+- C) File type
+- D) Header
+
+### Q224. FIELDQUOTE = '"' specifies:
+- A) Row ending
+- B) Character for quoted fields ✅
+- C) Column delimiter
+- D) File path
+
+### Q225. ENCODING = 'UTF-8' specifies:
+- A) File format
+- B) Character encoding ✅
+- C) Compression
+- D) Delimiter
+
+---
+
+## 📌 SECTION 21: Advanced CSV Query Topics
+
+### Q226. To create an external table from CSV:
+```sql
+CREATE EXTERNAL TABLE tablename
+WITH (
+    LOCATION = 'folder/',
+    DATA_SOURCE = datasource,
+    FILE_FORMAT = csvformat
+)
+AS SELECT * FROM OPENROWSET(...)
+```
+This is called:
+- A) CETAS ✅
+- B) SETAS
+- C) TABLES
+- D) CREATE
+
+### Q227. External data source points to:
+- A) SQL Server
+- B) Storage account location ✅
+- C) Azure AD
+- D) Key Vault
+
+### Q228. External file format defines:
+- A) Blob type
+- B) File structure (CSV/Parquet) ✅
+- C) Access level
+- D) Replication
+
+### Q229. Credentials in Synapse are used for:
+- A) User login
+- B) Accessing private storage ✅
+- C) Creating tables
+- D) Deleting data
+
+### Q230. Managed identity credential:
+- A) Uses password
+- B) Uses Azure AD identity ✅
+- C) Uses access key
+- D) Uses SAS
+
+### Q231. To handle NULL values in CSV:
+```sql
+WITH (column1 VARCHAR(50) NULL)
+```
+NULL keyword:
+- A) Rejects nulls
+- B) Allows null values ✅
+- C) Deletes nulls
+- D) Replaces nulls
+
+### Q232. FIRSTROW = 2 means:
+- A) Return only first 2 rows
+- B) Start reading from row 2 (skip header) ✅
+- C) Create 2 tables
+- D) Delete first row
+
+### Q233. Collation in CSV queries affects:
+- A) File size
+- B) String comparison and sorting ✅
+- C) Access speed
+- D) Replication
+
+### Q234. Query performance is better with:
+- A) CSV
+- B) Parquet ✅
+- C) JSON
+- D) TXT
+
+### Q235. Parquet is better because:
+- A) It's text-based
+- B) It's columnar with compression ✅
+- C) It's larger
+- D) It's slower
+
+---
+
+## 📌 SECTION 22: Error Handling and Troubleshooting
+
+### Q236. "403 Forbidden" error in storage usually means:
+- A) File not found
+- B) Access denied / authentication issue ✅
+- C) Storage is full
+- D) Region unavailable
+
+### Q237. "404 Not Found" error means:
+- A) Access denied
+- B) Resource doesn't exist ✅
+- C) Server error
+- D) Timeout
+
+### Q238. "409 Conflict" error usually means:
+- A) Access denied
+- B) Resource already exists or conflict ✅
+- C) Not found
+- D) Timeout
+
+### Q239. "503 Service Unavailable" indicates:
+- A) Access denied
+- B) Temporary server issue ✅
+- C) Not found
+- D) Authentication error
+
+### Q240. To troubleshoot storage access issues, check:
+- A) Only firewall
+- B) Firewall, SAS, keys, RBAC, network rules ✅
+- C) Only keys
+- D) Only RBAC
+
+### Q241. Blob not accessible from Synapse query:
+- A) Check storage firewall and credentials
+- B) Check blob URL, credentials, and network access ✅
+- C) Restart Synapse
+- D) Delete and recreate blob
+
+### Q242. CSV query returns wrong data types:
+- A) CSV is corrupted
+- B) Define explicit schema with WITH clause ✅
+- C) Change file extension
+- D) Re-upload file
+
+### Q243. Large CSV query is slow:
+- A) Use smaller file
+- B) Convert to Parquet, use partitioning ✅
+- C) Use archive tier
+- D) Delete data
+
+### Q244. Query timeout can be resolved by:
+- A) Waiting longer
+- B) Adding filters, using Parquet, partitioning ✅
+- C) Deleting data
+- D) Changing access tier
+
+### Q245. "Parser error" in CSV query usually means:
+- A) Wrong account
+- B) Incorrect delimiter or format specification ✅
+- C) Access denied
+- D) File too large
+
+---
+
+## 📌 SECTION 23: Best Practices
+
+### Q246. Best practice for blob naming:
+- A) Use spaces
+- B) Use meaningful, consistent naming convention ✅
+- C) Use random characters
+- D) Use very long names
+
+### Q247. For production storage, recommended replication:
+- A) LRS for all
+- B) GRS or GZRS for critical data ✅
+- C) No replication
+- D) LRS only
+
+### Q248. Best practice for access keys:
+- A) Share publicly
+- B) Rotate regularly, use Azure Key Vault ✅
+- C) Never change
+- D) Use in code
+
+### Q249. For large data analytics workloads, use:
+- A) Blob Storage only
+- B) Data Lake Storage Gen2 ✅
+- C) File Storage
+- D) Table Storage
+
+### Q250. Best format for analytics queries:
+- A) CSV
+- B) Parquet ✅
+- C) TXT
+- D) JSON
+
+---
+
+## 🎯 QUICK REVISION - Storage Key Points
+
+| Topic | Key Points |
+|-------|------------|
+| Storage Account Name | 3-24 chars, lowercase, globally unique |
+| Blob Endpoint | accountname.blob.core.windows.net |
+| Blob Types | Block (large files), Append (logs), Page (VHDs) |
+| Access Tiers | Hot, Cool (30d), Cold (90d), Archive (180d) |
+| Replication | LRS (3 copies), ZRS (3 zones), GRS (6 copies) |
+| Container Access | Private, Blob, Container |
+| SAS | Shared Access Signature - temporary access |
+| Max Blob Size | 190.7 TB (block blob) |
+| Soft Delete | 1-365 days retention |
+| ADLS Gen2 | Hierarchical namespace on Blob |
+| Synapse Query | OPENROWSET for CSV queries |
+
+---
+
+## 📝 Common CLI Commands Cheat Sheet
+
+```bash
+# Create storage account
+az storage account create --name <name> --resource-group <rg> --location <loc> --sku Standard_LRS
+
+# Create container
+az storage container create --name <container> --account-name <account>
+
+# Upload blob
+az storage blob upload --account-name <acc> --container-name <cont> --name <blob> --file <path>
+
+# Download blob
+az storage blob download --account-name <acc> --container-name <cont> --name <blob> --file <path>
+
+# List blobs
+az storage blob list --account-name <acc> --container-name <cont>
+
+# Delete blob
+az storage blob delete --account-name <acc> --container-name <cont> --name <blob>
+
+# Set tier
+az storage blob set-tier --account-name <acc> --container-name <cont> --name <blob> --tier Cool
+
+# Generate SAS
+az storage blob generate-sas --account-name <acc> --container-name <cont> --name <blob> --permissions r --expiry <date>
+```
+
+---
+
+## 📝 Synapse SQL Query Cheat Sheet
+
+```sql
+-- Basic CSV Query
+SELECT * 
+FROM OPENROWSET(
+    BULK 'https://account.blob.core.windows.net/container/file.csv',
+    FORMAT = 'CSV',
+    PARSER_VERSION = '2.0',
+    HEADER_ROW = TRUE
+) AS [data]
+
+-- With explicit schema
+SELECT * 
+FROM OPENROWSET(
+    BULK 'https://account.blob.core.windows.net/container/file.csv',
+    FORMAT = 'CSV',
+    PARSER_VERSION = '2.0',
+    FIRSTROW = 2
+) 
+WITH (
+    Column1 VARCHAR(100),
+    Column2 INT,
+    Column3 DECIMAL(10,2)
+) AS [data]
+
+-- With filter
+SELECT Column1, SUM(Column2) as Total
+FROM OPENROWSET(...)
+WHERE Column3 > 100
+GROUP BY Column1
+
+-- Query multiple files
+SELECT * 
+FROM OPENROWSET(
+    BULK 'https://account.blob.core.windows.net/container/folder/*.csv',
+    FORMAT = 'CSV'
+) AS [data]
+```
+
+---
+
+Good luck with your Lab 3 quiz! 📦💾🍀
