@@ -931,5 +931,3 @@ After detection:
     **Multiple instances:** Cycle → Maybe deadlock
 
 ---
-
-Shall I explain any topic in more detail, solve some numerical examples, or move to another set of topics? I can also give you some practice MCQ-style questions to test your understanding! 📚
