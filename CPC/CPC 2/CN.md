@@ -254,6 +254,15 @@ With bit stuffing:
 - Data can NEVER have six consecutive 1s
 - Only FLAG has six consecutive 1s
 - Therefore, FLAG is unambiguous!
+
+┌────────────────────────────────────────────────────────────────┐
+│                                                                │
+│   ┌──────┐   ┌─────────────────────────────┐   ┌──────┐       │
+│   │ FLAG │ + │      STUFFED DATA           │ + │ FLAG │       │
+│  │01111110│  │ (no 6+ consecutive 1s)      │  │01111110│      │
+│   └──────┘   └─────────────────────────────┘   └──────┘       │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
 ```
 
 **Example:**
@@ -265,9 +274,9 @@ Original Data:    01111110011111100111111111
                   like     like
                   FLAG!    FLAG!
 
-After Stuffing:   011111[0]10011111[0]10011111[0]1[0]11
-                        ▲         ▲          ▲   ▲
-                     Inserted  Inserted   Inserted bits
+After Stuffing:   011111[0]10011111[0]10011111[0]111
+                         ▲          ▲          ▲
+                      Inserted  Inserted   Inserted bits
 
 Rule Applied:
 01111110  → 011111[0]10  (0 inserted after 11111)
@@ -276,19 +285,44 @@ Rule Applied:
 **Step-by-step stuffing:**
 
 ```
-Input:  0 1 1 1 1 1 1 0 0 1 1 1 1 1 1 0 0
-        
-Scan for 5 consecutive 1s:
-        0 1 1 1 1 1 ← Found 5 ones, insert 0
-                  ↓
-Output: 0 1 1 1 1 1 0 1 0 0 1 1 1 1 1 0 1 0 0
-                  ▲               ▲
-               Stuffed          Stuffed
+Original Data:  1 1 1 1 1 1 1 0 1 1 1 1 1 0 1
+                └─────────┘     └───────┘
+                 7 ones          5 ones
+                 (Problem!)      (OK)
+
+Step-by-step stuffing:
+
+Position:   1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+Data:       1  1  1  1  1  1  1  0  1  1  1  1  1  0  1
+Count:      1  2  3  4  5  ↓     0  1  2  3  4  5  ↓
+                           │                       │
+                    Insert 0                Insert 0
+                    Reset count            Reset count
+
+After Stuffing:
+            1  1  1  1  1 [0] 1  1  0  1  1  1  1  1 [0] 0  1
+                           ▲                          ▲
+                        Stuffed                    Stuffed
+
+
+TRANSMITTED FRAME:
+┌──────────┬───────────────────────────────────┬──────────┐
+│ 01111110 │ 1111101100111110̲01                │ 01111110 │
+│  (FLAG)  │      (Stuffed Data)               │  (FLAG)  │
+└──────────┴───────────────────────────────────┴──────────┘
 ```
 
 **Receiver's Unstuffing:**
 ```
-Rule: After seeing 5 consecutive 1s, remove the next 0
+RULE: After seeing 5 consecutive 1s, REMOVE the next bit (which will be 0)
+
+Received Data:   1 1 1 1 1 [0] 1 1 0 1 1 1 1 1 [0] 0 1
+                            ▲                   ▲
+                         Remove               Remove
+
+Recovered Data:  1 1 1 1 1  1  1 0 1 1 1 1 1  0  1
+                 └─────────────┘   └───────────────┘
+                  Original data perfectly recovered!
 ```
 
 **Used in:** HDLC, USB, SONET
@@ -299,31 +333,337 @@ Rule: After seeing 5 consecutive 1s, remove the next 0
 
 **Concept:** Use "illegal" signal patterns as delimiters
 
-```
-In Manchester Encoding:
-- 0 = High→Low transition
-- 1 = Low→High transition
+# Physical Layer Coding Violations - Clear Explanation
 
-Violation = High→High or Low→Low (impossible in normal data!)
-```
+## First, Let's Understand Manchester Encoding Properly
+
+### Why Do We Need Encoding?
 
 ```
-Normal Manchester Signal:
-    ┌──┐  ┌──┐     ┌──┐
-    │  │  │  │     │  │
-────┘  └──┘  └─────┘  └──
-    1     0     1     0
+Problem with Raw Binary:
 
-Violation (delimiter):
-    ┌─────────┐
-    │         │     ← No transition = VIOLATION
-────┘         └────
+    Sender sends: 0 0 0 0 0 0 0 0 0 0 0 0
     
-This marks frame boundary!
+    Signal:  ────────────────────────────── (flat line)
+    
+    Receiver: "Is this 10 zeros? 12 zeros? 100 zeros?"
+              "Is the connection even working??"
+              "How do I sync my clock??"
+
+PROBLEM: No transitions = No way to synchronize clocks!
 ```
 
-**Advantage:** No overhead (no extra bits/bytes)
-**Disadvantage:** Depends on physical encoding scheme
+### Manchester Encoding Solution
+
+```
+RULE: Every bit MUST have a transition in the MIDDLE of its time slot
+
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│   Bit 0 = HIGH in first half, LOW in second half  (↓)     │
+│   Bit 1 = LOW in first half, HIGH in second half  (↑)     │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+
+       Bit 0                    Bit 1
+    ┌────────┐               │        ┌────────┐
+    │ HIGH   │               │  LOW   │  HIGH  │
+    │        │               │        │        │
+    │        └────────┐      └────────┘        │
+    │          LOW    │                        │
+    └─────────────────┘      └─────────────────┘
+           ↓                        ↑
+    Transition DOWN          Transition UP
+     in middle               in middle
+```
+
+## Let's Encode Some Real Data
+
+### Example: Encoding "1 0 1 1 0"
+
+```
+Data bits:    1        0        1        1        0
+
+Time slots: |──────|──────|──────|──────|──────|
+
+For bit 1: LOW→HIGH (↑)     For bit 0: HIGH→LOW (↓)
+
+
+Signal:
+        ┌────┐      ┌────┐  ┌────┐      
+        │    │      │    │  │    │      
+   ─────┘    │ ┌────┘    │  │    │ ┌────┘
+             │ │         │  │    │ │     
+             └─┘         └──┘    └─┘     
+   
+   |    1    |    0    |    1    |    1    |    0    |
+       ↑          ↓         ↑         ↑         ↓
+      L→H        H→L       L→H       L→H       H→L
+```
+
+### The KEY Observation
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│   In Manchester Encoding, EVERY bit period has a           │
+│   transition in the MIDDLE:                                 │
+│                                                             │
+│   • Either HIGH → LOW  (representing 0)                    │
+│   • Or     LOW → HIGH  (representing 1)                    │
+│                                                             │
+│   There is NO VALID DATA that can produce NO TRANSITION!   │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## Now: What is a VIOLATION?
+
+### A Violation = Breaking the Rules on Purpose
+
+```
+NORMAL (Valid data):
+Every bit slot has a transition in the middle
+
+        ┌────┐      ┌────┐
+        │    │      │    │
+   ─────┘    └──────┘    └──────
+        
+        ↑         ↑         ↑
+   Transition Transition Transition
+     (OK)       (OK)       (OK)
+
+
+VIOLATION (Impossible in normal data):
+NO transition in the middle!
+
+   ─────────────────────────────    ← Stays HIGH, no transition
+   
+   OR
+   
+   ─────────────────────────────    ← Stays LOW, no transition
+             
+             ↑
+        No transition here!
+        This is ILLEGAL in Manchester encoding
+        This can ONLY be a delimiter!
+```
+
+## Real-World Example: Ethernet's Use of Violations
+
+### Ethernet Preamble and Start Frame Delimiter
+
+```
+Ethernet uses Manchester encoding and needs to mark where frame starts.
+
+PREAMBLE (7 bytes of 10101010):
+Normal Manchester encoding - lots of transitions
+Purpose: Let receiver synchronize its clock
+
+   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐
+   │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │
+───┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └───
+   1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+   
+   "Nice regular pattern, I can sync my clock to this!"
+
+
+START FRAME DELIMITER (SFD = 10101011):
+Ends with TWO consecutive 1s
+
+   ┌─┐ ┌─┐ ┌─┐ ┌───────┐
+   │ │ │ │ │ │ │       │    ← Notice: No transition 
+───┘ └─┘ └─┘ └─┘       └───     between the two 1s!
+   1 0 1 0 1 0 1   1
+                 └───┘
+            This pattern (11) creates a 
+            "violation" of the regular alternating pattern
+            
+   "Aha! Pattern broke! Frame data starts NOW!"
+```
+
+## Another Example: Token Ring
+
+### Token Ring uses Differential Manchester + Violations
+
+```
+Differential Manchester:
+- Transition at START of bit = 0
+- NO transition at START of bit = 1
+- ALWAYS transition in MIDDLE (for clocking)
+
+
+NORMAL DATA:
+
+Bit:      0           1           0           1
+      ┌───────┐               ┌───────┐
+      │   ↓   │   ┌───────┐   │   ↓   │   ┌───────┐
+──────┘       └───┘   ↓   └───┘       └───┘   ↓   └──
+      ↑           ↑       ↑   ↑           ↑       ↑
+   Start      Middle   Start Middle    Start   Middle
+   (has         (has    (no   (has     (has     (has
+   trans)       trans)  trans) trans)  trans)   trans)
+
+
+J VIOLATION (No middle transition, HIGH→HIGH):
+      ┌───────────────┐
+      │               │      ← Stays HIGH through middle!
+──────┘               └──────
+      
+      "Wait, no middle transition? This is J symbol!"
+
+
+K VIOLATION (No middle transition, LOW→LOW):
+
+──────┐               ┌──────
+      │               │      ← Stays LOW through middle!
+      └───────────────┘
+      
+      "No middle transition again? This is K symbol!"
+
+
+Frame Delimiter = JK pattern:
+      ┌───────────────┐           ┌──────
+      │      J        │           │
+──────┘               └───────────┘
+                            K
+                      
+      "JK detected! This marks frame boundary!"
+```
+
+## Visual Comparison: Normal vs Violation
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    NORMAL MANCHESTER DATA                       │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   Bit period:  |←────────────→|                                 │
+│                                                                 │
+│   Bit 0:       ▄▄▄▄▄▄▄▄                                         │
+│                        ▄▄▄▄▄▄▄▄                                 │
+│                    ↑                                            │
+│                 MUST have                                       │
+│                transition                                       │
+│                                                                 │
+│   Bit 1:               ▄▄▄▄▄▄▄▄                                 │
+│                ▄▄▄▄▄▄▄▄                                         │
+│                    ↑                                            │
+│                 MUST have                                       │
+│                transition                                       │
+│                                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│                      VIOLATION                                  │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   No transition in middle:                                      │
+│                                                                 │
+│   Type 1:      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                                 │
+│                (Stays HIGH)                                     │
+│                    ↑                                            │
+│                 NO transition!                                  │
+│                 IMPOSSIBLE for real data                        │
+│                                                                 │
+│   Type 2:      ________________                                 │
+│                (Stays LOW)                                      │
+│                    ↑                                            │
+│                 NO transition!                                  │
+│                 IMPOSSIBLE for real data                        │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Why Is This Clever?
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  COMPARE WITH OTHER FRAMING METHODS:                            │
+│                                                                 │
+│  ┌─────────────────┬─────────────────┬───────────────────────┐  │
+│  │     Method      │    Overhead     │       Issue           │  │
+│  ├─────────────────┼─────────────────┼───────────────────────┤  │
+│  │ Character Count │   1 byte/frame  │ Single point failure  │  │
+│  ├─────────────────┼─────────────────┼───────────────────────┤  │
+│  │ Byte Stuffing   │   Variable      │ Extra ESC bytes       │  │
+│  ├─────────────────┼─────────────────┼───────────────────────┤  │
+│  │ Bit Stuffing    │   ~1 bit/5 bits │ Extra 0s added        │  │
+│  ├─────────────────┼─────────────────┼───────────────────────┤  │
+│  │ Code Violation  │   ZERO!         │ Need specific encoding│  │
+│  └─────────────────┴─────────────────┴───────────────────────┘  │
+│                                                                 │
+│  Code Violation = FREE delimiters (no extra bits needed)!       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Complete Frame Example
+
+```
+ETHERNET FRAME TRANSMISSION:
+
+Step 1: Idle Line (no data)
+────────────────────────────────────────
+(Line stays at constant voltage)
+
+
+Step 2: Preamble (10101010 × 7 bytes)
+   ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐
+───┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─ ...
+"Regular transitions - sync your clock here!"
+
+
+Step 3: Start Frame Delimiter (10101011)
+   ┌─┐ ┌─┐ ┌─┐ ┌─────┐
+───┘ └─┘ └─┘ └─┘     └───
+            └───────┘
+            "11" pattern - different from preamble!
+            "Frame is starting NOW!"
+
+
+Step 4: Actual Frame Data
+   [Destination MAC][Source MAC][Type][Data][FCS]
+   (All encoded in normal Manchester)
+
+
+Step 5: End of Frame
+   Return to idle...
+────────────────────────────────────────
+```
+
+## Memory Trick 🧠
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│   Think of it like GRAMMAR RULES:                               │
+│                                                                 │
+│   Normal English: "Hello, how are you?"                         │
+│                   (Follows grammar rules)                       │
+│                                                                 │
+│   Violation:      "!!!CHAPTER_START!!!"                         │
+│                   (Intentionally breaks rules)                  │
+│                   (Can NEVER appear in normal text)             │
+│                   (So it's a perfect section marker!)           │
+│                                                                 │
+│   Similarly:                                                    │
+│   - Manchester encoding has RULES (must transition in middle)   │
+│   - Violation = Intentionally break the rule                    │
+│   - Since real data CANNOT break this rule...                   │
+│   - Violations are PERFECT frame delimiters!                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+## Summary
+
+| Aspect | Description |
+|--------|-------------|
+| **What it is** | Using "illegal" signal patterns as frame markers |
+| **Why it works** | Normal data encoding CANNOT produce these patterns |
+| **Advantage** | Zero overhead - no extra bits added to data |
+| **Disadvantage** | Only works with encoding schemes that have "illegal" patterns |
+| **Used in** | Ethernet (10 Mbps), Token Ring, FDDI |
 
 ---
 
