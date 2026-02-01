@@ -811,65 +811,130 @@ Intersection of failed row & column = Error position!
 
 ### 3. Checksum
 
-**Concept:** Add all data segments, transmit sum, receiver verifies
+**Concept:** Add all data segments, transmit sum's complement, receiver verifies
 
-#### Internet Checksum Algorithm:
-
-```
-Step 1: Divide data into 16-bit words
-Step 2: Add all words (with wraparound carry)
-Step 3: Take 1's complement
-Step 4: Transmit with data
-```
-
-**Example:**
+#### Internet Checksum Algorithm
 
 ```
-Data to send: 10101001 00111001
-
-Step 1: Divide into 16-bit segment
-        10101001 00111001
-
-Step 2: (In real scenario, multiple segments are added)
-        Let's say sum = 10110011 00111001
-
-Step 3: Handle overflow (wrap around)
-        If sum > 16 bits, add carry back
-
-Step 4: 1's complement
-        10110011 00111001
-        ─────────────────
-        01001100 11000110  ← This is checksum
-
-Transmit: Data + Checksum
+Step 1: Divide data into fixed-size words (e.g., 8-bit or 16-bit)
+Step 2: Add all words (wrap around carry if overflow)
+Step 3: Take 1's complement of sum → This is checksum
+Step 4: Transmit data + checksum
 ```
 
-**Receiver Verification:**
+#### Complete Example (8-bit words)
+
 ```
-1. Add all received segments + checksum
-2. If result = all 1s (1111...1111) → No error
-3. If any 0 exists → Error detected
+┌─────────────────────────────────────────────────────────────────────┐
+│                         SENDER'S END                                │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Frame 1:         1 1 0 0 1 1 0 0                                   │
+│  Frame 2:       + 1 0 1 0 1 0 1 0                                   │
+│                 ─────────────────                                   │
+│  Partial Sum:   1 0 1 1 1 0 1 1 0   ← 9 bits! (overflow)            │
+│                 ↓                                                   │
+│  Wrap carry:      0 1 1 1 0 1 1 0                                   │
+│                 +               1   ← Add the carry bit             │
+│                 ─────────────────                                   │
+│                   0 1 1 1 0 1 1 1                                   │
+│                                                                     │
+│  Frame 3:       + 1 1 1 1 0 0 0 0                                   │
+│                 ─────────────────                                   │
+│  Partial Sum:   1 0 1 1 0 0 1 1 1   ← 9 bits! (overflow)            │
+│                 ↓                                                   │
+│  Wrap carry:      0 1 1 0 0 1 1 1                                   │
+│                  +              1   ← Add the carry bit             │
+│                 ─────────────────                                   │
+│                   0 1 1 0 1 0 0 0                                   │
+│                                                                     │
+│  Frame 4:       + 1 1 0 0 0 0 1 1                                   │
+│                 ─────────────────                                   │
+│  Partial Sum:   1 0 0 1 0 1 0 1 1   ← 9 bits! (overflow)            │
+│                 ↓                                                   │
+│  Wrap carry:      0 0 1 0 1 0 1 1                                   │
+│                  +              1   ← Add the carry bit             │
+│                 ─────────────────                                   │
+│  Final Sum:       0 0 1 0 1 1 0 0                                   │
+│                                                                     │
+│  Checksum:        1 1 0 1 0 0 1 1   ← 1's complement of sum         │
+│                                                                     │
+│  TRANSMIT: [Frame1][Frame2][Frame3][Frame4][Checksum]               │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
-**Why 1's complement?**
 ```
-Number + 1's complement = All 1s
-
-Data sum:    10110011 00111001
-Checksum:    01001100 11000110
-           + ─────────────────
-             11111111 11111111 ✓
-
-If any bit changed → Won't be all 1s → Error!
+┌─────────────────────────────────────────────────────────────────────┐
+│                        RECEIVER'S END                               │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Frame 1:         1 1 0 0 1 1 0 0                                   │
+│  Frame 2:       + 1 0 1 0 1 0 1 0                                   │
+│                 ─────────────────                                   │
+│  Partial Sum:   1 0 1 1 1 0 1 1 0   (overflow → wrap)               │
+│                   0 1 1 1 0 1 1 1                                   │
+│                                                                     │
+│  Frame 3:       + 1 1 1 1 0 0 0 0                                   │
+│                 ─────────────────                                   │
+│  Partial Sum:   1 0 1 1 0 0 1 1 1   (overflow → wrap)               │
+│                   0 1 1 0 1 0 0 0                                   │
+│                                                                     │
+│  Frame 4:       + 1 1 0 0 0 0 1 1                                   │
+│                 ─────────────────                                   │
+│  Partial Sum:   1 0 0 1 0 1 0 1 1   (overflow → wrap)               │
+│                   0 0 1 0 1 1 0 0                                   │
+│                                                                     │
+│  Checksum:      + 1 1 0 1 0 0 1 1   ← Add received checksum         │
+│                 ─────────────────                                   │
+│  Result:        1 1 1 1 1 1 1 1     ← ALL 1s!                       │
+│                                                                     │
+│  Complement:    0 0 0 0 0 0 0 0     ← ALL 0s = NO ERROR!            │
+│                                                                     │
+│                    ✓ ACCEPT FRAMES                                  │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
-**Limitations:**
-- Cannot detect if two 16-bit words are swapped
-- Cannot detect if same bits flip in multiple words
+#### Why This Works
 
-**Used in:** IP, TCP, UDP headers
+```
+Sum + Checksum = Sum + (1's complement of Sum) = All 1s
 
----
+  Sum:       00101100
+  Checksum:  11010011  (1's complement)
+           + ─────────
+             11111111  ✓ All 1s = Valid!
+```
+
+#### Error Detection
+
+```
+If ANY bit changes during transmission:
+
+  Sum:       00101100
+  Checksum:  11010001  ← Bit error!
+           + ─────────
+             11111101  ✗ NOT all 1s = ERROR!
+```
+
+#### Limitations
+
+| Limitation | Example |
+|------------|---------|
+| Cannot detect word swaps | Frame 1 ↔ Frame 2 swapped (same sum) |
+| Cannot detect compensating errors | +1 in one word, -1 in another |
+| Order-independent | Addition is commutative |
+
+#### Usage
+
+```
+Protocol     │ Checksum Size │ Mandatory?
+─────────────┼───────────────┼───────────
+IP Header    │ 16-bit        │ Yes (IPv4), No (IPv6)
+TCP          │ 16-bit        │ Yes
+UDP          │ 16-bit        │ Optional (IPv4), Required (IPv6)
+```
 
 ### 4. Cyclic Redundancy Check (CRC) ⭐
 
